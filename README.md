@@ -6,7 +6,7 @@
 ## Features
 - a user can create an account as either ”user” or ”admin”
 - a user can log in and log out
-- a user can search and view ads (with or with out logging in)
+- a user can search and view ads (with or without logging in)
 - a logged user has a profile where user can write description of himself/herself
 - a logged user can comment a profile and the owner can delete comments
 - a logged user can rate a profile based on how trade went
