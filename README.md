@@ -13,9 +13,9 @@
 - a logged user can create an ad with a picture(optional)
 - a logged user can comment an ad
 - a logged user can send a message to another registered user
-- a logged view and delete messages
-- a logged user can remove users own ad
-- a logged user can view list of users own ad history
+- a logged user can view and delete messages
+- a logged user can remove user's own ad
+- a logged user can view list of user's own ad history
 - an admin can remove any comment
 - an admin can remove any ad
 - an admin can remove any user profile
