@@ -10,7 +10,7 @@
 - a logged user has a profile where user can write description of himself/herself
 - a logged user can comment a profile and the owner can delete comments
 - a logged user can rate a profile based on how trade went
-- a logged user can create an ad add with a picture(optional)
+- a logged user can create an ad with a picture(optional)
 - a logged user can comment an ad
 - a logged user can send a message to another registered user
 - a logged view and delete messages
