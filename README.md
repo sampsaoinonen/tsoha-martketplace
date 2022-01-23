@@ -17,8 +17,8 @@
 - a logged user can remove users own ad
 - a logged user can view list of users own ad history
 - an admin can remove any comment
-- an admin car remove any ad
-- an admin car remove any user profile
+- an admin can remove any ad
+- an admin can remove any user profile
 
 ## Sketch of SQL-tables
 
