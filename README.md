@@ -28,7 +28,7 @@ Guitars
 
 Amps 
 
-Other (other items guitar-related)
+Other (other guitar-related items)
 
 AdLikes
 
