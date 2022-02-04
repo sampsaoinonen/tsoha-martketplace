@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %} Market {% endblock %}
+{% block content %}
+<a href="/" class="text-decoration-none text-dark">
+    <div class="card mb-3">
+      <img src="/static/images/market.jpg" class="card-img-top" alt="market_background">
+      <div class="card-body bg-light">        
+        <p class="card-text"><b>2 Many Gittars</b> is an open marketplace for guitars, amps, pedals and other items related to guitar.
+          You can browse ads and read comments on ads while being logged out. If you register and sign in you are able to create a your own profile, create ads, send and read messages, comment ads and hit like-button.
+        </p>
+      </div>
+    </div>
+  </a>
+  
+<table>
+    {% for filename in filenames %}
+    <tr>
+      <th><a href="/files/{{filename[0]}}">{{filename[1]}}</a></th>  
+                    
+    </tr>
+  {% endfor %}
+
+
+  
+
+</table>
+{% endblock %}
