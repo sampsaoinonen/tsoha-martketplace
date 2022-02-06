@@ -77,8 +77,3 @@ def new_ad():
         if len(price) < 0 or len(price) > 9999999.99 :
             flash("Price has to be between 0 and 9,999,999.99")
             return redirect("/new_ad")
-
-        if users.register(username, password1):
-            return redirect("/")
-        else:
-            return render_template("error.html", error="Something went wrong. Registration was aborted!")
