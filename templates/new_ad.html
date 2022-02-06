@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %} 2 Many Gittars {% endblock %}
+{% block content %}
+<form action="/new_ad" onsubmit="return validateForm()" method="post">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <div class="form-group">
+        <label>Title: </label>
+        <br>
+        <input type="text" name="title" class="form-control form-control" placeholder="Gibson Les Paul -09" required>    
+        <label>Description: </label>
+        <br>
+        <textarea type="text" name="description" class="form-control form-control" placeholder="Like new conditon Les Paul. etc." rows="5 "></textarea>    
+        <label>Phone: </label>
+        <br>
+        <input type="tel" name="phone" class="form-control form-control" placeholder="555-001">    
+        <label>Email: </label>
+        <br>
+        <input type="email" name="email" class="form-control form-control" placeholder="info@example.com">    
+        <label>Location: </label>
+        <br>
+        <input type="text" name="location" class="form-control form-control" placeholder="Amsterdam, Netherlands">    
+        <label>Price: </label>
+        <br>
+        <input type="number" name="price" class="form-control form-control" placeholder="1200.00" required>
+        <br>
+        <label>Add a photo under 1MB. Only formats .jpg .png .gif allowed!</label>
+        <br>
+        <input type="file" name="file">
+        <br>
+        
+        <br>
+        <button type="submit" class="btn btn-primary">Create a New Ad</button>
+    </div>
+</form>
+{% endblock %}

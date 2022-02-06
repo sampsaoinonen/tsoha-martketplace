@@ -34,5 +34,6 @@ def register(username, password):
 def user_id():
     return session.get("user_id",0)
 
-def check(csrf_token):	
-	return session["csrf_token"] == csrf_token
+def check_csrf(form_token):
+    if session["csrf_token"] != form_token:
+        abort(403)
