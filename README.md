@@ -20,23 +20,13 @@
 - an admin can remove any ad
 - an admin can remove any user profile
 
-## Sketch of SQL-tables
+## Current state (6.2)
 
-Users
+Registering, logging in and out are working. So is "add new ad" - page though is not adding anything to the database yet. The overall appearence of the webpage is coming together. 
 
-Guitars
+The app is possible to test on https://tsoha-2manygittars.herokuapp.com
 
-Amps 
+### Working on at the moment:
 
-Other (other guitar-related items)
-
-AdLikes
-
-ProfileLikes
-
-Adcomments
-
-Profilecomments
-
-Photos
-
+- adding ads with pictures into the database
+- using and showing info from categories-table
