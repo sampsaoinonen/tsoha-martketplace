@@ -13,16 +13,15 @@ CREATE TABLE ads (
     phone TEXT,    
     email TEXT,
     location TEXT,
-    price DECIMAL(6,2),
+    price DECIMAL(7,2),
     sent_at TIMESTAMP DEFAULT NOW(),
     user_id INTEGER REFERENCES users,
-    cate_id INTEGER REFERENCES categories,    
-
+    cat_id INTEGER REFERENCES categories
 );
 
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,    
-    cate_name TEXT UNIQUE
+    cat_name TEXT UNIQUE
 );
 
 CREATE TABLE userimages (
