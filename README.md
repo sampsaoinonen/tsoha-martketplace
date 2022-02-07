@@ -20,9 +20,9 @@
 - an admin can remove any ad
 - an admin can remove any user profile
 
-## Current state (6.2)
+## Current state
 
-Registering, logging in and out are working. So is "add new ad" - page though is not adding anything to the database yet. The overall appearence of the webpage is coming together. 
+Registering, logging in and out are working. So is "add new ad" - page except pics not adding anything to the database yet. Browse-page shows really simple list of the adds. The overall appearence of the webpage is coming together. 
 
 The app is possible to test on https://tsoha-2manygittars.herokuapp.com
 
@@ -30,3 +30,4 @@ The app is possible to test on https://tsoha-2manygittars.herokuapp.com
 
 - adding ads with pictures into the database
 - using and showing info from categories-table
+- search
