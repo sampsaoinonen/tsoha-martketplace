@@ -1,6 +1,6 @@
 from app import app
-from flask import render_template, request, redirect, flash, session
-import users, ads
+from flask import render_template, request, redirect, flash
+import users, ads, photos
 
 @app.route("/")     
 def index():        
@@ -39,7 +39,7 @@ def register():
         if len(password1) < 5 or len(password1) > 20:
             flash("Password has to be between 5 and 20 characters!")
             return redirect("/register")
-        if len(username) < 3 or len(password1) > 20:
+        if len(username) < 3 or len(username) > 20:
             flash("Username has to be between 3 and 20 characters!")
             return redirect("/register")
         if users.register(username, password1):
@@ -54,7 +54,7 @@ def browse():
 
 @app.route("/new_ad", methods=["GET", "POST"]) 
 def new_ad():
-    user_id = session['user_id']
+    user_id = users.user_id()
     if user_id == 0:
         flash("Log in to create a new ad!")
         return redirect("/")
@@ -62,9 +62,8 @@ def new_ad():
         categories = ads.get_cats()
         return render_template("new_ad.html", categories=categories)
     if request.method == "POST":
-        users.check_csrf(request.form["csrf_token"])
-        cat_id = request.form["cate"]
-        print(cat_id)
+        users.check_csrf(request.form["csrf_token"])        
+        cat_id = request.form["cate"]        
         title = request.form["title"]
         description = request.form["description"]
         phone = request.form["phone"]
@@ -78,17 +77,30 @@ def new_ad():
             flash("Description has to be between 3 and 200 characters!")
             return redirect("/new_ad")
         if len(phone) > 20:
-            flash("Phone number has to be under 20 characters!")
+            flash("Phone number has to be at most 20 characters!")
             return redirect("/new_ad")
         if len(email) > 50:
-            flash("Email address has to be under 20 characters!")
+            flash("Email address has to be at most 20 characters!")
             return redirect("/new_ad")
         if len(location) > 50:
-            flash("Location has to be under 50 characters!")
+            flash("Location has to be at most 50 characters!")
             return redirect("/new_ad")
         if len(price) < 0 or len(price) > 9999999.99 :
             flash("Price has to be between 0 and 9,999,999.99")
             return redirect("/new_ad")
         
-        ads.add_ad(title, description, phone, email, location, price, user_id, cat_id)
+        file = request.files["file"]
+        image_name = file.filename
+        if not image_name.endswith(".jpg"):
+            flash("Invalid filetype!")
+            return redirect("/new_ad")
+        data = file.read()        
+        if len(data) > 1000*1024:
+            flash("Your image is too big!")
+            return redirect("/new_ad")
+        ad_id = ads.add_ad(title, description, phone, email, location, price, user_id, cat_id)
+        print(ad_id)
+        photos.add_adimage(image_name, ad_id, data)
+
         return redirect("/") 
+        

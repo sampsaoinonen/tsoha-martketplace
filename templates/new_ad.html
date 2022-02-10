@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 {% block title %} 2 Many Gittars {% endblock %}
 {% block content %}
-<form action="/new_ad" onsubmit="return validateForm()" method="post">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+<form action="/new_ad" onsubmit="return validateForm()" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     <div class="form-group">
-        <label for = "cate">Categories</label><br/>
+        <label for = "categories">Categories</label><br/>
         <select class="form-select form-select-font-size" id="cate" name="cate" required>
         
         <option selected>Pick category</option>

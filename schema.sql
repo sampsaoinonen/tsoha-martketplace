@@ -25,19 +25,21 @@ CREATE TABLE categories (
 );
 
 CREATE TABLE userimages (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    image_name TEXT,
     user_id INTEGER REFERENCES users,
-    image DATA
+    data BYTEA
 );
 
 CREATE TABLE adimages (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    image_name TEXT,
     ad_id INTEGER REFERENCES ads,
-    image DATA
+    data BYTEA
 );
 
 CREATE TABLE messages (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     user_from INTEGER REFERENCES users,
     user_to INTEGER REFERENCES users,
     message TEXT,
