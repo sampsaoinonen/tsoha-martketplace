@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template, request, redirect, flash
-import users, ads, photos
+import users, ads, images, db
+import datetime
 
 @app.route("/")     
 def index():        
@@ -60,7 +61,8 @@ def new_ad():
         return redirect("/")
     if request.method == "GET":
         categories = ads.get_cats()
-        return render_template("new_ad.html", categories=categories)
+        types = ads.get_types()
+        return render_template("new_ad.html", categories=categories, types=types)
     if request.method == "POST":
         users.check_csrf(request.form["csrf_token"])        
         cat_id = request.form["cate"]        
@@ -69,9 +71,12 @@ def new_ad():
         phone = request.form["phone"]
         email = request.form["email"]
         location = request.form["location"]
+        type_id = request.form["type"]
         price = request.form["price"]
-        if len(title) < 3 or len(title) > 20:
-            flash("Title has to be between 5 and 20 characters!")
+        expires = request.form["expires"]
+        
+        if len(title) < 3 or len(title) > 30:
+            flash("Title has to be between 3 and 30 characters!")
             return redirect("/new_ad")
         if len(description) < 3 or len(description) > 200:
             flash("Description has to be between 3 and 200 characters!")
@@ -88,6 +93,9 @@ def new_ad():
         if len(price) < 0 or len(price) > 9999999.99 :
             flash("Price has to be between 0 and 9,999,999.99")
             return redirect("/new_ad")
+        if len(expires) < 1 or len(expires) > 365 :
+            flash("Number of days hav to be between 1 and 365")
+            return redirect("/new_ad")
         
         file = request.files["file"]
         image_name = file.filename
@@ -98,9 +106,25 @@ def new_ad():
         if len(data) > 1000*1024:
             flash("Your image is too big!")
             return redirect("/new_ad")
-        ad_id = ads.add_ad(title, description, phone, email, location, price, user_id, cat_id)
+        ad_id = ads.add_ad(title, description, phone, email, location, price, expires, user_id, cat_id, type_id)
         print(ad_id)
-        photos.add_adimage(image_name, ad_id, data)
+        images.add_adimage(image_name, ad_id, data)
 
-        return redirect("/") 
+        return redirect("/")
+    
+@app.route("/ad/<int:ad_id>",methods=["GET"])
+def ad(ad_id):
+    ad = ads.get_ad(ad_id)
+    expires_date = ad[8] + datetime.timedelta(days=10)    
+    return render_template("ad.html", ad=ad, expires_date=expires_date)
+
+@app.route("/image/<int:ad_id>", methods=['GET'])
+def show_image(ad_id):
+    if request.method == 'GET':
+        image = images.get_adimage(ad_id)
+        if image:
+            return image
+    flash("Image could not been found")
+    return redirect('/')
+
         

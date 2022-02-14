@@ -12,8 +12,7 @@
         {% for cat in categories %}
         <option value={{ cat.id }}>{{ cat.cat_name }}</option>
         {% endfor %}
-        </select>
-        <br>
+        </select>        
         <label>Title: </label>
         <br>
         <input type="text" name="title" class="form-control form-control" placeholder="Gibson Les Paul -09" required>    
@@ -28,12 +27,24 @@
         <input type="email" name="email" class="form-control form-control" placeholder="info@example.com">    
         <label>Location: </label>
         <br>
-        <input type="text" name="location" class="form-control form-control" placeholder="Amsterdam, Netherlands">    
+        <input type="text" name="location" class="form-control form-control" placeholder="Amsterdam, Netherlands">                    
+        <label for = "Type">Type</label>        
+        <select class="form-select form-select-font-size" id="type" name="type" required>
+        
+        <option selected>Pick type</option>
+        
+        {% for type in types %}
+        <option value={{ type.id }}>{{ type.type_name }}</option>
+        {% endfor %}
+        </select>        
         <label>Price: </label>
+        <br>        
+        <input type="number" name="price" class="form-control form-control" placeholder="1200.00" required>        
+        <label>Days until expires: </label>
         <br>
-        <input type="number" name="price" class="form-control form-control" placeholder="1200.00" required>
+        <input type="number" name="expires" class="form-control form-control" placeholder="10" required>
         <br>
-        <label>Add a photo under 1MB. Only formats .jpg .png .gif allowed!</label>
+        <label>Add a image under 1MB. Only formats .jpg .png .gif allowed!</label>
         <br>
         <input type="file" name="file">
         <br>

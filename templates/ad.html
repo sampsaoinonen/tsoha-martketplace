@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block title %} 2 Many Gittars {% endblock %}
+{% block content %}
+<style>
+    td {
+  padding: 5px;
+}
+</style>
+<table cellspacing=0 cellpadding=0 border=0 width="100%">
+    <tr class="bg2" style="background-color:#cae0f7">
+        <td class="title" width="95%">
+            <b>For sale:</b>
+        <h3>{{ad[1]}}</h3>
+        </td>        
+        <td align=right width="100">            
+            &nbsp;&nbsp;Added:&nbsp;{{ad[8].strftime("%d/%m/%Y")}}            
+            <br>
+            &nbsp;&nbsp;Expires:&nbsp;{{expires_date.strftime("%d/%m/%Y")}}
+            <br>           
+        </td>
+    </tr>             
+    <tr>
+        <td> 
+            <b>User:</b>
+            <a href="/users/157947">{{ad[9]}}</a>                        
+        </td>
+        <td align=right>                        
+            <a href="/message">Send message</a>
+        </td>
+    </tr>
+    <br>
+    <tr>
+        <td>
+            {{ad[2]}}
+        </td>
+    </tr>                            
+    <tr class="bg2" style="background-color:#cae0f7">
+        <td colspan=2>
+            <b>Category:</b>
+            <a href="/category">{{ad[10]}}</a>         
+            <br>
+            <b>Location:</b>
+            {{ad[5]}}
+            <br>
+            <b>Phone:</b>
+            {{ad[3]}}
+            <br>
+            <b>Email:</b>
+            {{ad[4]}}
+            <br>            
+        </td>
+    <tr>
+</table>     
+<a href="/image/{{ad[0]}}">                        
+    <img src="/image/{{ad[0]}}" class="border" width=260 height=180 style="margin: 5 10 5 0;">
+</a>
+             
+{% endblock %}
