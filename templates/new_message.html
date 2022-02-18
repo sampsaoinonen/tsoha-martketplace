@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %} 2 Many Gittars {% endblock %}
+{% block content %}
+<form action="/new_message" onsubmit="return validateForm()" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <div class="form-group">
+        <label>Send To: </label>
+        <br>
+        <input type="text" name="user_to" class="form-control form-control" placeholder="username" required>
+        <label>Subject: </label>
+        <br>
+        {% if form %}
+        <input type="text" name="subject" class="form-control form-control" value="{{ form.subject }}" required>
+        {% else %}
+        <input type="text" name="subject" class="form-control form-control" placeholder="Gibson Les Paul -09" required>
+        {% endif %}
+        <label>Message: </label>
+        <br>
+        {% if form %}
+        <input type="text" name="message" class="form-control form-control" value="{{ form.message }}" required>
+        {% else %}
+        <input type="text" name="message" class="form-control form-control" placeholder="..." required>
+        {% endif %}
+        <br>
+        <button type="submit" class="btn btn-primary">Send</button>
+    </div>    
+</form>
+{% endblock %}

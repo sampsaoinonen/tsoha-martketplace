@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %} Inbox {% endblock %}
+{% block content %}
+<style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #cae0f7;
+    }
+  </style> 
+  <br>
+  <table>
+    <th>Subject</th>
+    <th>Sender</th>
+    <th>Sent at</th>   
+          
+  <tr>    
+    <td>{{msg[3]}}</td>             
+    <td>{{msg[7]}}</td>
+    <td>{{msg[5].strftime("%Y-%m-%d, %H:%M")}}</td>    
+  </tr>
+  <th colspan = "3">Message</th>
+  <tr>    
+    <td colspan = "3">{{msg[4]}}</td>                 
+  </tr>
+</table>
+    
+{% endblock %}

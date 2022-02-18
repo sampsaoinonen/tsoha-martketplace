@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %} Inbox {% endblock %}
+{% block content %}
+<style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #cae0f7;
+    }
+  </style> 
+  (*) unread
+  <br>
+  <table>
+    <th>Subject</th>
+    <th>Sender</th>
+    <th>Sent at</th>   
+    {% for msg in msgs %}        
+  <tr>
+    {% if msg[6] %}
+    <td><a href="/inbox/{{msg[0]}}">{{msg[3]}}</a></td>  
+    {% else %}
+    <th>(*)<a href="/inbox/{{msg[0]}}">{{msg[3]}}</a></th>
+    {% endif %}
+    <td>{{msg[7]}}</td>
+    <td>{{msg[5].strftime("%Y-%m-%d, %H:%M")}}</td>
+    
+  </tr>
+{% endfor %}
+</table>
+{% endblock %}

@@ -18,22 +18,27 @@
                 <h1 class="display-1"> 2 Many Gittars </h1>
             </a>
 
-            <div class="nav col-10 col-md-auto mb-2 justify-content-center mb-md-0">                
-                <a href="/browse"> <button type="button" class="btn btn-outline-primary">Browse</button></a>
-                <a href="/search"> <button type="button" class="btn btn-outline-primary">Search</button></a>
+            <div class="nav col-10 col-md-3 mb-2 justify-content-center mb-md-0">
+                {% if session.user_id %}
+                <a href="/new_ad"><button type="button" class="btn btn-outline-primary">New Ad</button></a>                
+                <a href="/browse"> <button type="button" class="btn btn-outline-primary">Browse Ads</button></a>
+                <a href="/search"> <button type="button" class="btn btn-outline-primary">Search Ad</button></a>
+                {% else %}
+                <a href="/browse"> <button type="button" class="btn btn-outline-primary">Browse Ads</button></a>
+                <a href="/search"> <button type="button" class="btn btn-outline-primary">Search Ad</button></a>
+                {% endif %}
             </div>
 
             <div class="col-md-3 text-end">
                 {% if session.user_id %}
-                <a href="/messages"><button type="button" class="btn btn-outline-primary">Messages</button></a>
-                <a href="/new_ad"><button type="button" class="btn btn-outline-primary">New Ad</button></a>
-                <a href="/logout"><button type="button" class="btn btn-outline-primary">Log Out</button></a>
-            </div>
+                <a href="/new_message"><button type="button" class="btn btn-outline-primary">New Message</button></a>
+                <a href="/inbox"><button type="button" class="btn btn-outline-primary">Inbox</button></a>                
+                <a href="/logout"><button type="button" class="btn btn-outline-primary">Log Out</button></a>            
             {% else %}
             <a href="/login"><button type="button" class="btn btn-primary">Log In</button></a>
             <a href="/register"><button type="button" class="btn btn-primary">Register</button></a>
             {% endif %}
-    </div>
+            </div>
     </header>
     </div>
     <div class="container">    

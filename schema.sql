@@ -48,6 +48,7 @@ CREATE TABLE messages (
     id SERIAL PRIMARY KEY,
     user_from INTEGER REFERENCES users,
     user_to INTEGER REFERENCES users,
+    subject TEXT,
     message TEXT,
     sent_at TIMESTAMP DEFAULT NOW(),
     seen BOOLEAN DEFAULT false

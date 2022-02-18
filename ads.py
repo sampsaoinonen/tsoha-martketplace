@@ -11,7 +11,7 @@ def get_ads():
 def get_ad(ad_id):
     sql = '''SELECT A.id, A.title, A.description, A.phone, A.email, A.location, A.price, A.expires, A.sent_at, 
     U.username, C.cat_name FROM ads A, categories C, users U, adtypes T WHERE A.id=:ad_id AND C.id=A.cat_id
-    AND U.id=A.user_id AND T.id=A.type_id GROUP BY A.id, C.cat_name, U.username ORDER BY A.sent_at DESC'''
+    AND U.id=A.user_id AND T.id=A.type_id'''
     result = db.session.execute(sql, {"ad_id":ad_id})
     return result.fetchone()
 
