@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block title %} 2 Many Gittars {% endblock %}
+{% block content %}
+<form action="/search_result" onsubmit="return validateForm()" method="GET">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <div class="form-group">
+        <label>User: </label>
+        <br>
+        <input type="text" name="user" class="form-control form-control">
+        <label>Title: </label>
+        <br>        
+        <input type="text" name="title" class="form-control form-control">        
+        <label>Description: </label>
+        <br>
+        <input type="text" name="description" class="form-control form-control">       
+        <label>Price Low: </label>
+        <br>
+        <input type="number" name="price_low" class="form-control form-control" value=0 required>
+        <label>Price High: </label>
+        <br>
+        <input type="number" name="price_high" class="form-control form-control" value=10000000 required>
+        <br>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>    
+</form>
+{% endblock %}

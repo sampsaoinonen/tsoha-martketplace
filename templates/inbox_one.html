@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} Inbox {% endblock %}
+{% block title %} Inbox one {% endblock %}
 {% block content %}
 <style>
     table {
@@ -17,7 +17,12 @@
     tr:nth-child(even) {
       background-color: #cae0f7;
     }
-  </style> 
+  </style>
+  <div class="col-md-3 text-end justify-content-center">
+        
+    <a href="/inbox"><button type="button" class="btn btn-outline-primary">Received</button></a>                
+    <a href="/sent"><button type="button" class="btn btn-outline-primary">Sent</button></a>
+  </div>
   <br>
   <table>
     <th>Subject</th>

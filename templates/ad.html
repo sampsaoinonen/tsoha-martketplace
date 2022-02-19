@@ -6,6 +6,8 @@
   padding: 5px;
 }
 </style>
+<button onclick="history.back()" class="btn btn-outline-primary">Go Back</button>
+<br>
 <table cellspacing=0 cellpadding=0 border=0 width="100%">
     <tr class="bg2" style="background-color:#cae0f7">
         <td class="title" width="95%">
@@ -50,9 +52,11 @@
             <br>            
         </td>
     <tr>
-</table>     
-<a href="/image/{{ad[0]}}">                        
-    <img src="/image/{{ad[0]}}" class="border" width=260 height=180 style="margin: 5 10 5 0;">
-</a>
+</table>
+{% if is_image%}    
+    <a href="/image/{{ad[0]}}">                        
+        <img src="/image/{{ad[0]}}" class="border" width=260 height=180 style="margin: 5 10 5 0;">
+    </a>
+{% endif %}
              
 {% endblock %}

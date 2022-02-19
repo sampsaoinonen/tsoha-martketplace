@@ -6,25 +6,38 @@ def send(user_from, user_to, subject, message):
     result = db.session.execute(sql, {"user_from":user_from,"user_to":user_to, "subject":subject, "message":message})
     db.session.commit()    
 
-def get_one(user_to, message_id):
+def get_one_inbox(user_to, message_id):
     sql = '''SELECT M.id, M.user_from, M.user_to, M.subject, M.message, M.sent_at, M.seen, U.username 
-    FROM messages M, users U WHERE M.id=:message_id AND U.id=M.user_from AND U.id=M.user_to
-    AND M.user_to=:user_to'''
+    FROM messages M, users U WHERE M.id=:message_id AND U.id=M.user_from AND M.user_to=:user_to'''
     result = db.session.execute(sql, {"user_to":user_to, "message_id":message_id})
     return result.fetchone()
 
-def get_received(user_to):
+def get_one_sent(user_from, message_id):
+    sql = '''SELECT M.id, M.user_from, M.user_to, M.subject, M.message, M.sent_at, M.seen, U.username 
+    FROM messages M, users U WHERE M.id=:message_id AND U.id=M.user_to AND M.user_from=:user_from'''
+    result = db.session.execute(sql, {"user_from":user_from, "message_id":message_id})
+    return result.fetchone()
+
+def get_inbox(user_to):
     sql = '''SELECT M.id, M.user_from, M.user_to, M.subject, M.message, M.sent_at, M.seen, U.username
-    FROM messages M, users U WHERE M.user_to=:user_to and U.id=M.user_from GROUP BY M.id, U.username
+    FROM messages M, users U WHERE M.user_to=:user_to and U.id=M.user_from GROUP BY M.id, U.id
     ORDER BY sent_at DESC'''
     result = db.session.execute(sql, {"user_to":user_to})
     return result.fetchall()
 
 def get_sent(user_from):
-    sql = '''SELECT user_from, user_to, subject, message, sent_at, seen, username 
-    FROM messages M, users U WHERE M.user_from=:user_from AND U.id=M.user_from AND U.id=M.user_to'''
+    sql = '''SELECT M.id, M.user_from, M.user_to, M.subject, M.message, M.sent_at, M.seen, U.username
+    FROM messages M, users U WHERE M.user_from=:user_from and U.id=M.user_to GROUP BY M.id, U.id
+    ORDER BY sent_at DESC'''
     result = db.session.execute(sql, {"user_from":user_from})
     return result.fetchall()
 
-#def read(message_id):
-    
+def seen(message_id):
+    sql = '''UPDATE messages SET seen=TRUE WHERE id=:message_id'''
+    result = db.session.execute(sql, {"message_id":message_id})
+    db.session.commit()
+
+def check_unread(user_to):
+    sql = "SELECT COUNT(*) FROM messages WHERE user_to=:user_to AND seen=FALSE"
+    result = db.session.execute(sql, {"user_to":user_to})
+    return result.fetchone()

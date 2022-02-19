@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} Inbox {% endblock %}
+{% block title %} Sent one {% endblock %}
 {% block content %}
 <style>
     table {
@@ -23,24 +23,21 @@
     <a href="/inbox"><button type="button" class="btn btn-outline-primary">Received</button></a>                
     <a href="/sent"><button type="button" class="btn btn-outline-primary">Sent</button></a>
   </div>
-  <br>  
-  (*) unread
   <br>
   <table>
     <th>Subject</th>
-    <th>Sender</th>
+    <th>Sent to</th>
     <th>Sent at</th>   
-    {% for msg in msgs %}        
-  <tr>
-    {% if msg[6] %}
-    <td><a href="/inbox/{{msg[0]}}">{{msg[3]}}</a></td>  
-    {% else %}
-    <th>(*)<a href="/inbox/{{msg[0]}}">{{msg[3]}}</a></th>
-    {% endif %}
+          
+  <tr>    
+    <td>{{msg[3]}}</td>             
     <td>{{msg[7]}}</td>
-    <td>{{msg[5].strftime("%Y-%m-%d, %H:%M")}}</td>
-    
+    <td>{{msg[5].strftime("%Y-%m-%d, %H:%M")}}</td>    
   </tr>
-{% endfor %}
+  <th colspan = "3">Message</th>
+  <tr>    
+    <td colspan = "3">{{msg[4]}}</td>                 
+  </tr>
 </table>
+    
 {% endblock %}

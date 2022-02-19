@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} 2 Many Gittars {% endblock %}
+{% block title %} New Message {% endblock %}
 {% block content %}
 <form action="/new_message" onsubmit="return validateForm()" method="POST">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">

@@ -32,7 +32,11 @@
             <div class="col-md-3 text-end">
                 {% if session.user_id %}
                 <a href="/new_message"><button type="button" class="btn btn-outline-primary">New Message</button></a>
-                <a href="/inbox"><button type="button" class="btn btn-outline-primary">Inbox</button></a>                
+                {% if unread%}
+                <a href="/inbox"><button type="button" class="btn btn-outline-primary">({{unread[0]}})Inbox</button></a>
+                {% else %}
+                <a href="/inbox"><button type="button" class="btn btn-outline-primary">Inbox</button></a>
+                {% endif %}
                 <a href="/logout"><button type="button" class="btn btn-outline-primary">Log Out</button></a>            
             {% else %}
             <a href="/login"><button type="button" class="btn btn-primary">Log In</button></a>

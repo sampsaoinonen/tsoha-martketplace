@@ -1,15 +1,42 @@
-{% extends "layout.html" %}
-{% block title %} 2 Many Gittars {% endblock %}
-{% block content %}
- 
-<div class="card text-center" style="width: 18rem;">
-    <table>
-        <tr>    
-        {% for ad in all_ads %} 
-        <a href="/ad/{{ad[0]}}">{{ad[1]}}</a>({{ad[9]}}) Uploaded by {{ad[9]}} at {{ad[8].strftime("%d.%m.%Y")}}
-        {% endfor %}      
-    
-        </tr>
-    </table>
-  </div>
+  {% extends "layout.html" %}
+  {% block title %} Browse {% endblock %}
+  {% block content %}
+  <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #cae0f7;
+      }
+    </style>    
+    <table> 
+      <th>Category</th>
+      <th>Type</th>
+      <th>Title</th>
+      <th>Location</th>
+      <th>Price</th>
+      <th>User</th>
+      <th>Sent at</th>   
+    {% for ad in all_ads %}        
+    <tr>      
+      <td>{{ad[10]}}</td>
+      <td>{{ad[11]}}</td>
+      <th><a href="/ad/{{ad[0]}}">{{ad[1]}}</a></th>      
+      <td>{{ad[5]}}</td>
+      <td>{{ad[6]}}</td>
+      <td>{{ad[9]}}</td>
+      <td>{{ad[8].strftime("%Y-%m-%d, %H:%M")}}</td>
+      
+    </tr>
+  {% endfor %}
+  </table>
   {% endblock %}
