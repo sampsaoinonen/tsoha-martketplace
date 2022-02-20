@@ -23,7 +23,7 @@ The app is possible to test on https://tsoha-2manygittars.herokuapp.co
 
 ## Current state 20.2
 
-Basic functionalities are working pretty good and layout is almost there. User profile pages, commenting and deleting ads and messages are still in progress.
+Basic functionalities are working pretty good and layout is almost there. User profile pages, commenting and deleting ads/messages are still in progress. The project has took so much more work than I thought but I hope the biggest challenges are behind(Like search fuctionality and uploading images).
 
 - :ballot_box_with_check: a user can create an account as either ”user” or ”admin”. Admin not possible yet.
 - :ballot_box_with_check: a user can log in and log out
