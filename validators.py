@@ -16,8 +16,8 @@ def new_ad(title, description, phone, email, location, price, expires):
     if len(title) < 3 or len(title) > 30:
         flash("Title has to be between 3 and 30 characters!")
         return False
-    if len(description) < 3 or len(description) > 200:
-        flash("Description has to be between 3 and 200 characters!")
+    if len(description) < 3 or len(description) > 500:
+        flash("Description has to be between 3 and 500 characters!")
         return False
     if len(phone) > 20:
         flash("Phone number has to be at most 20 characters!")
