@@ -2,6 +2,7 @@
 
 2 Many Gittars is a marketplace for guitars, amps and other items related to guitars. This web application will be created using Flask and PostgreSQL-database. It will be deployed on Heroku.
 
+The app is possible to test on https://tsoha-2manygittars.herokuapp.co
 
 ## Features
 - a user can create an account as either ”user” or ”admin”
@@ -20,14 +21,22 @@
 - an admin can remove any ad
 - an admin can remove any user profile
 
-## Current state
+## Current state 20.2
 
-Registering, logging in and out are working. So is "add new ad" - page except pics not adding anything to the database yet. Browse-page shows really simple list of the adds. The overall appearence of the webpage is coming together. 
+Basic functionalities are working pretty good and layout is almost there. User profile pages, commenting and deleting ads and messages are still in progress.
 
-The app is possible to test on https://tsoha-2manygittars.herokuapp.com
-
-### Working on at the moment:
-
-- adding ads with pictures into the database
-- using and showing info from categories-table
-- search
+:ballot_box_with_check: a user can create an account as either ”user” or ”admin”. Admin not possible yet.
+:ballot_box_with_check: a user can log in and log out
+:ballot_box_with_check: a user can search and view ads (with or without logging in)
+:black_square_button: a logged user has a profile where user can write description of himself/herself
+:black_square_button: a logged user can comment a profile and the owner can delete comments
+:black_square_button: a logged user can rate a profile based on how trade went
+:ballot_box_with_check: a logged user can create an ad with a picture(optional)
+:black_square_button: a logged user can comment an ad
+:ballot_box_with_check: a logged user can send a message to another registered user
+:ballot_box_with_check: a logged user can view and delete messages. Delete not possible yet.
+:black_square_button: a logged user can remove user's own ad
+:black_square_button: a logged user can view list of user's own ad history
+:black_square_button: an admin can remove any comment
+:black_square_button: an admin can remove any ad
+:black_square_button: an admin can remove any user profile
