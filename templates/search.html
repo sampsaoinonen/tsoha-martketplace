@@ -7,12 +7,28 @@
         <label>User: </label>
         <br>
         <input type="text" name="user" class="form-control form-control">
+        <label>Category: </label>
+        <br>        
+        <select class="form-select form-select-font-size" id="cate" name="cate">        
+            <option label="Pick category"></option>        
+            {% for cat in categories %}
+            <option value={{ cat.id }}>{{ cat.cat_name }}</option>
+            {% endfor %}
+        </select>  
         <label>Title: </label>
         <br>        
         <input type="text" name="title" class="form-control form-control">        
         <label>Description: </label>
         <br>
-        <input type="text" name="description" class="form-control form-control">       
+        <input type="text" name="description" class="form-control form-control">
+        <label>Type: </label>
+        <br>             
+        <select class="form-select form-select-font-size" id="type" name="type" >        
+            <option label="Pick type"></option>            
+            {% for type in types %}
+            <option value={{ type.id }}>{{ type.type_name }}</option>
+            {% endfor %}
+        </select>
         <label>Price Low: </label>
         <br>
         <input type="number" name="price_low" class="form-control form-control" value=0 required>

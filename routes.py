@@ -150,7 +150,7 @@ def new_messsage():
         message = request.form["message"]
         if users.search(user_to_name):
             user_to_id = users.search(user_to_name)
-            messages.send(user_id, user_to_id, subject, message) #here redirect to inbox
+            messages.send(user_id, user_to_id, subject, message) 
             flash("The message has been sent!")
             return redirect("/sent")            
         else:            
@@ -176,7 +176,7 @@ def inbox_one(msg_id):
     unread = messages.check_unread(user_id)
     msg = messages.get_one_inbox(user_id, msg_id)
     messages.seen(msg_id)
-    return render_template("inbox_one.html", msg=msg, unread=unread)
+    return render_template("message.html", msg=msg, unread=unread)
 
 @app.route("/sent")
 def sent():
@@ -197,22 +197,16 @@ def sent_one(msg_id):
     unread = messages.check_unread(user_id)
     msg = messages.get_one_sent(user_id, msg_id)
     messages.seen(msg_id)
-    return render_template("sent_one.html", msg=msg, unread=unread)
+    return render_template("message.html", msg=msg, unread=unread)
 
-
-@app.route("/new_message/<int:user_to>", methods=["POST"]) ### not usefull atm
-def direct_message(user_to):
-    user_to = request.form["user_to"]
-    if not users.search(user_to):
-        flash("The user doesn't exist!")
-        return redirect("new_message.html")
-    return render_template("direct_message.html", user_to=user_to)
 
 @app.route("/search")
 def search():
     user_id = users.user_id()
     unread = messages.check_unread(user_id)
-    return render_template("search.html", unread=unread)
+    categories = ads.get_cats()
+    types = ads.get_types()
+    return render_template("search.html", unread=unread, categories=categories, types=types)
 
 @app.route("/search_result")
 def search_result():    
@@ -221,9 +215,11 @@ def search_result():
         users.check_csrf(request.args["csrf_token"])
     unread = messages.check_unread(user_id)
     username = request.args["user"].lower()
+    cat_id = request.args["cate"]
     title = request.args["title"].lower()
     description = request.args["description"].lower()
     price_low = request.args["price_low"]
     price_high = request.args["price_high"]
-    results = ads.search(username, title, description, price_low, price_high)
+    type_id = request.args["type"]
+    results = ads.search(username, title, description, price_low, price_high, cat_id, type_id)
     return render_template("ads.html", all_ads=results, unread=unread)
