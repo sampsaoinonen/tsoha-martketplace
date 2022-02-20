@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect, flash
-import users, ads, images, db, messages
+import users, ads, images, messages, validators
 import datetime
 
 @app.route("/")     
@@ -17,6 +17,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if users.login(username, password):
+            flash("Login succesful!")
             return redirect("/")
         else:
             flash("Wrong password or user doesn't exist!")
@@ -35,16 +36,10 @@ def register():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
-        if password1 != password2:
-            flash("Passwords don't mach!")
-            return redirect("/register")
-        if len(password1) < 5 or len(password1) > 20:
-            flash("Password has to be between 5 and 20 characters!")
-            return redirect("/register")
-        if len(username) < 3 or len(username) > 20:
-            flash("Username has to be between 3 and 20 characters!")
-            return redirect("/register")
+        if not validators.register(username, password1, password2):
+            return redirect("/register")       
         if users.register(username, password1):
+            flash("Registration succesful!")
             return redirect("/")
         else:
             return render_template("error.html", error="Something went wrong. Registration was aborted!")
@@ -63,12 +58,13 @@ def new_ad():
         flash("Log in to create a new ad!")
         return redirect("/login")
     unread = messages.check_unread(user_id)
-    if request.method == "GET":
-        categories = ads.get_cats()
-        types = ads.get_types()
+    form = request.form
+    categories = ads.get_cats()
+    types = ads.get_types()
+    if request.method == "GET":        
         return render_template("new_ad.html", categories=categories, types=types, unread=unread)
     if request.method == "POST":
-        users.check_csrf(request.form["csrf_token"])        
+        users.check_csrf(request.form["csrf_token"])     
         cat_id = request.form["cate"]        
         title = request.form["title"]
         description = request.form["description"]
@@ -78,41 +74,15 @@ def new_ad():
         type_id = request.form["type"]
         price = request.form["price"]
         expires = request.form["expires"]
-        
-        if len(title) < 3 or len(title) > 30:
-            flash("Title has to be between 3 and 30 characters!")
-            return redirect("/new_ad")
-        if len(description) < 3 or len(description) > 200:
-            flash("Description has to be between 3 and 200 characters!")
-            return redirect("/new_ad")
-        if len(phone) > 20:
-            flash("Phone number has to be at most 20 characters!")
-            return redirect("/new_ad")
-        if len(email) > 50:
-            flash("Email address has to be at most 20 characters!")
-            return redirect("/new_ad")
-        if len(location) > 50:
-            flash("Location has to be at most 50 characters!")
-            return redirect("/new_ad")
-        if len(price) < 0 or len(price) > 9999999.99 :
-            flash("Price has to be between 0 and 9,999,999.99")
-            return redirect("/new_ad")
-        if len(expires) < 1 or len(expires) > 365 :
-            flash("Number of days have to be between 1 and 365")
-            return redirect("/new_ad")
-        
+        if not validators.new_ad(title, description, phone, email, location, price, expires):        
+            return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)
         ad_id = ads.add_ad(title, description, phone, email, location, price, expires, user_id, cat_id, type_id)
-
-        file = request.files["file"]
-        image_name = file.filename
-        if file:
-            if not image_name.endswith(".jpg"):
-                flash("Invalid filetype!")
-                return redirect("/new_ad")
-            data = file.read()        
-            if len(data) > 1000*1024:
-                flash("Your image is too big!")
-                return redirect("/new_ad")
+        file = request.files["file"]             
+        if file:            
+            if not validators.image(file):
+                return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)            
+            image_name = file.filename
+            data = file.read()
             images.add_adimage(image_name, ad_id, data)
         return redirect("/browse")
     
@@ -124,14 +94,6 @@ def ad(ad_id):
     expires_date = ad[8] + datetime.timedelta(days=10)
     is_image = images.check_adimage(ad_id)
     return render_template("ad.html", ad=ad, expires_date=expires_date, is_image=is_image, unread=unread)
-
-@app.route("/image/<int:ad_id>")
-def show_image(ad_id):    
-    image = images.get_adimage(ad_id)
-    if image:
-        return image
-    flash("Image could not been found")
-    return redirect('/')
 
 @app.route("/new_message",methods=["GET", "POST"])
 def new_messsage():     
@@ -149,6 +111,8 @@ def new_messsage():
         subject = request.form["subject"]
         message = request.form["message"]
         if users.search(user_to_name):
+            if not validators.new_message(subject, message):
+                return render_template("new_message.html", form=form, unread=unread)
             user_to_id = users.search(user_to_name)
             messages.send(user_id, user_to_id, subject, message) 
             flash("The message has been sent!")
@@ -221,5 +185,15 @@ def search_result():
     price_low = request.args["price_low"]
     price_high = request.args["price_high"]
     type_id = request.args["type"]
+    if not validators.search(username, title, description, price_low, price_high):
+        return redirect("/search")
     results = ads.search(username, title, description, price_low, price_high, cat_id, type_id)
     return render_template("ads.html", all_ads=results, unread=unread)
+
+@app.route("/image/<int:ad_id>")
+def show_image(ad_id):    
+    image = images.get_adimage(ad_id)
+    if image:
+        return image
+    flash("Image could not been found")
+    return redirect('/')

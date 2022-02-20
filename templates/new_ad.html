@@ -5,9 +5,8 @@
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     <div class="form-group">
         <label for = "categories">Categories</label><br/>
-        <select class="form-select form-select-font-size" id="cate" name="cate" required>
-        
-        <option selected>Pick category</option>
+        <select class="form-select form-select-font-size" id="cate" name="cate" required>        
+        <option label="Pick category"></option>
         
         {% for cat in categories %}
         <option value={{ cat.id }}>{{ cat.cat_name }}</option>
@@ -15,10 +14,21 @@
         </select>        
         <label>Title: </label>
         <br>
+        {% if form %}
+        <input type="text" name="title" class="form-control form-control" value="{{ form.subject }}" required>    
+        <label>Description: </label>
+        <br>
+        {% else %}
         <input type="text" name="title" class="form-control form-control" placeholder="Gibson Les Paul -09" required>    
         <label>Description: </label>
         <br>
-        <textarea type="text" name="description" class="form-control form-control" placeholder="Like new conditon Les Paul. etc." rows="5 "></textarea>    
+        {% endif %}        
+        {% if form %}
+        <textarea type="text" name="description" class="form-control form-control" rows="5 ">{{ form.description }}</textarea>        
+        {% else %}
+        <textarea type="text" name="description" class="form-control form-control" placeholder="Like new conditon Les Paul. etc." rows="5 "></textarea>
+        {% endif %}
+            
         <label>Phone: </label>
         <br>
         <input type="tel" name="phone" class="form-control form-control" placeholder="555-001">    
@@ -29,9 +39,8 @@
         <br>
         <input type="text" name="location" class="form-control form-control" placeholder="Amsterdam, Netherlands">                    
         <label for = "Type">Type</label>        
-        <select class="form-select form-select-font-size" id="type" name="type" required>
-        
-        <option selected>Pick type</option>
+        <select class="form-select form-select-font-size" id="type" name="type" required>        
+        <option label="Pick type"></option>
         
         {% for type in types %}
         <option value={{ type.id }}>{{ type.type_name }}</option>
