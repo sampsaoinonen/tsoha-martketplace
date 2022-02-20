@@ -78,11 +78,12 @@ def new_ad():
             return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)
         ad_id = ads.add_ad(title, description, phone, email, location, price, expires, user_id, cat_id, type_id)
         file = request.files["file"]             
-        if file:            
-            if not validators.image(file):
-                return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)            
-            image_name = file.filename
+        if file:
             data = file.read()
+            image_name = file.filename         
+            if not validators.image(image_name, len(data)):
+                return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)            
+            print("okei")                        
             images.add_adimage(image_name, ad_id, data)
         return redirect("/browse")
     

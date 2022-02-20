@@ -63,13 +63,17 @@ def search(username, title, description, price_low, price_high):
         return False
     return True
 
-def image(file):
-    extensions = [".jpg", "jpeg", "gif", "png"]
-    if not file.filename.lower().endswith(tuple(extensions)):
+def image(image_name, data_size):         
+    if not image_type(image_name):
         flash("Invalid filetype!")
-        return False
-    data = file.read()
-    if len(data) > 1000*1024:
+        return False         
+    if data_size > 1000*1024:
         flash("Your image is too big!")
+        return False    
+    return True
+
+def image_type(filename):
+    extensions = [".jpg", "jpeg", "gif", "png"]
+    if not filename.lower().endswith(tuple(extensions)):        
         return False
     return True
