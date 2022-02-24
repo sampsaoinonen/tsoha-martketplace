@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block title %} 2 Many Gittars {% endblock %}
 {% block content %}
+<h1>Search ad</h1>
 <form action="/search_result" onsubmit="return validateForm()" method="GET">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     <div class="form-group">

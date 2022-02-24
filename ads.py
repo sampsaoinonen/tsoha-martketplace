@@ -16,8 +16,8 @@ def get_ad(ad_id):
     return result.fetchone()
 
 def add_ad(title, description, phone, email, location, price, expires, user_id, cat_id, type_id):    
-    sql = '''INSERT INTO ads (title, description, phone, email, location, price, expires, sent_at, user_id, cat_id, 
-    type_id) VALUES (:title, :description, :phone, :email, :location, :price, :expires, NOW(), :user_id, :cat_id, 
+    sql = '''INSERT INTO ads (title, description, phone, email, location, price, expires, sent_at, user_id, cat_id, type_id) 
+    VALUES (:title, :description, :phone, :email, :location, :price, :expires, NOW(), :user_id, :cat_id, 
     :type_id) RETURNING id'''
     result = db.session.execute(sql, {"title":title,"description":description, "phone":phone, "email":email,
     "location":location,"price":price, "expires":expires, "user_id":user_id, "cat_id":cat_id, "type_id":type_id})

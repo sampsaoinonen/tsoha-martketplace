@@ -44,10 +44,10 @@ def search(username):
         return False
     return message_id[0]
 
-def get_username(id):
-    sql = "SELECT username FROM users WHERE id=:id"
+def get_user(id):
+    sql = "SELECT id, username, description FROM users WHERE id=:id"
     result = db.session.execute(sql, {"id":id})
-    message_id = result.fetchone()
-    if not message_id:
+    user_info = result.fetchone()
+    if not user_info:
         return False
-    return message_id[0]
+    return user_info

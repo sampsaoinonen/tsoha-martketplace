@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block title %} 2 Many Gittars {% endblock %}
 {% block content %}
+<h1>Create a new add</h1>
 <form action="/new_ad" onsubmit="return validateForm()" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     <div class="form-group">
@@ -31,10 +32,18 @@
             
         <label>Phone: </label>
         <br>
-        <input type="tel" name="phone" class="form-control form-control" placeholder="555-001">    
+        {% if form %}
+        <input type="tel" name="phone" class="form-control form-control" value="{{ form.phone }}">
+        {% else %}
+        <input type="tel" name="phone" class="form-control form-control" placeholder="555-001">
+        {% endif %}
         <label>Email: </label>
         <br>
-        <input type="email" name="email" class="form-control form-control" placeholder="info@example.com">    
+        {% if form %}
+        <input type="email" name="email" class="form-control form-control" value="{{ form.email }}">
+        {% else %}
+        <input type="email" name="email" class="form-control form-control" placeholder="info@example.com">
+        {% endif %}
         <label>Location: </label>
         <br>
         <input type="text" name="location" class="form-control form-control" placeholder="Amsterdam, Netherlands">                    

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} 2 Many Gittars {% endblock %}
+{% block title %} Ad {% endblock %}
 {% block content %}
 <style>
     td {
@@ -27,7 +27,7 @@
             <a href="/users/157947">{{ad[9]}}</a>                        
         </td>
         <td align=right>                        
-            <a href="/message">Send message</a>
+            <a href="/new_message/{{ad[9]}}/{{ad[1]}}">Send message</a>
         </td>
     </tr>
     <br>
@@ -39,7 +39,7 @@
     <tr class="bg2" style="background-color:#cae0f7">
         <td colspan=2>
             <b>Category:</b>
-            <a href="/category">{{ad[10]}}</a>         
+            <b>{{ad[10]}}</b>         
             <br>
             <b>Location:</b>
             {{ad[5]}}
@@ -53,10 +53,30 @@
         </td>
     <tr>
 </table>
-{% if is_image%}    
+{% if is_image%}
+<hr>    
     <a href="/image/{{ad[0]}}">                        
-        <img src="/image/{{ad[0]}}" class="border" width=260 height=180 style="margin: 5 10 5 0;">
+        <img src="/image/{{ad[0]}}" class="border" height=180 style="margin: 5 10 5 0;">
     </a>
+{% endif %}
+<hr>
+<h4>Comments:</h4>
+{% for adcomment in adcomments %}
+    {{adcomment[0]}}: {{adcomment[1]}}<br>
+    {{adcomment[2].strftime("%Y-%m-%d %H:%M:%S")}}
+<br>
+<br>
+{% endfor %}
+{% if user_id!=0%}
+    <form action="/add_adcomment" method="POST">
+    Your comment here{{logged_comment}}: <br>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <textarea name="content" rows="3" cols="60"></textarea>
+    <br>
+    <input type="submit" value="Send">
+    <input type="hidden" name="ad_id" id="ad_id" value="{{ad[0]}}">    
+    
+    </form>
 {% endif %}
              
 {% endblock %}

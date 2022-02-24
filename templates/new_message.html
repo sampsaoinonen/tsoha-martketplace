@@ -1,26 +1,39 @@
 {% extends "layout.html" %}
 {% block title %} New Message {% endblock %}
 {% block content %}
+<h1>Create a new message</h1>
+<br>
 <form action="/new_message" onsubmit="return validateForm()" method="POST">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <div class="col-md-3 text-end justify-content-center">
+    
+        <a href="/new_message"><button type="button" class="btn btn-outline-primary">New Message</button></a>
+        <a href="/inbox"><button type="button" class="btn btn-outline-primary">Received</button></a>                
+        <a href="/sent"><button type="button" class="btn btn-outline-primary">Sent</button></a>
+      </div>
+    <br>
     <div class="form-group">
         <label>Send To: </label>
         <br>
+        {% if form %}
+        <input type="text" name="user_to" class="form-control form-control" value="{{ form.user_to }}" required>
+        {% else %}
         <input type="text" name="user_to" class="form-control form-control" placeholder="username" required>
+        {% endif %}        
         <label>Subject: </label>
         <br>
         {% if form %}
-        <input type="text" name="subject" class="form-control form-control" value="{{ form.subject }}" required>
+        <input type="text" name="subject" class="form-control form-control" value="RE: {{ form.subject }}" required>
         {% else %}
         <input type="text" name="subject" class="form-control form-control" placeholder="Gibson Les Paul -09" required>
         {% endif %}
         <label>Message: </label>
         <br>
-        {% if form %}
-        <input type="text" name="message" class="form-control form-control" value="{{ form.message }}" required>
+        {% if form %}        
+        <textarea type="text" name="message" class="form-control form-control" rows="5" required>{{ form.message }}</textarea>
         {% else %}
-        <input type="text" name="message" class="form-control form-control" placeholder="..." required>
-        {% endif %}
+        <textarea type="text" name="message" class="form-control form-control" rows="5" placeholder="..." required></textarea>
+        {% endif %}        
         <br>
         <button type="submit" class="btn btn-primary">Send</button>
     </div>    

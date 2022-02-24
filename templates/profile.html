@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %} Ad {% endblock %}
+{% block content %}
+<style>
+    td {
+  padding: 5px;
+}
+</style>
+<button onclick="history.back()" class="btn btn-outline-primary">Go Back</button>
+<br>
+<table cellspacing=0 cellpadding=0 border=0 width="100%">
+    <tr class="bg2" style="background-color:#cae0f7">
+        <td class="title" width="95%">
+            <b>User: {{user[1]}}</b>        
+        </td>        
+    
+        <td align=right>                        
+            <a href="/message">Send message</a>
+        </td>
+    </tr>
+    <br>
+    <tr>
+        <td>
+            <b>Description: </b>
+        </td>
+    </tr>                            
+    <tr class="bg2" style="background-color:#cae0f7">
+        <td colspan=2>
+            <b>Category:</b>
+            <b></b>         
+            <br>
+            <b>Location:</b>
+            
+            <br>
+            <b>Phone:</b>
+            
+            <br>
+            <b>Email:</b>
+            
+            <br>            
+        </td>
+    <tr>
+</table>
+{% if is_image%}    
+    <a href="/image/{{user[0]}}">                        
+        <img src="/image/{{user[0]}}" class="border" height=180 style="margin: 5 10 5 0;">
+    </a>
+{% endif %}
+             
+{% endblock %}

@@ -53,3 +53,12 @@ CREATE TABLE messages (
     sent_at TIMESTAMP DEFAULT NOW(),
     seen BOOLEAN DEFAULT false
 );
+
+CREATE TABLE adcomments (
+    id SERIAL PRIMARY KEY,
+    content TEXT,
+    sent_at TIMESTAMP DEFAULT NOW(),    
+    ad_id INTEGER REFERENCES ads,
+    user_id INTEGER REFERENCES users
+	
+);

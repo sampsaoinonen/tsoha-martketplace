@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect, flash
-import users, ads, images, messages, validators
+import users, ads, images, messages, comments, validators
 import datetime
 
 @app.route("/")     
@@ -17,15 +17,16 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if users.login(username, password):
-            flash("Login succesful!")
+            flash("Login succesful!", "success")
             return redirect("/")
         else:
-            flash("Wrong password or user doesn't exist!")
+            flash("Wrong password or user doesn't exist!", "error")
             return redirect("/login")            
 
 @app.route("/logout")
 def logout():
     users.logout()
+    flash("You have logged out!", "success")
     return redirect("/")
 
 @app.route("/register", methods=["GET", "POST"]) 
@@ -39,7 +40,7 @@ def register():
         if not validators.register(username, password1, password2):
             return redirect("/register")       
         if users.register(username, password1):
-            flash("Registration succesful!")
+            flash("Registration succesful!", "success")
             return redirect("/")
         else:
             return render_template("error.html", error="Something went wrong. Registration was aborted!")
@@ -82,8 +83,7 @@ def new_ad():
             data = file.read()
             image_name = file.filename         
             if not validators.image(image_name, len(data)):
-                return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)            
-            print("okei")                        
+                return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)                                                
             images.add_adimage(image_name, ad_id, data)
         return redirect("/browse")
     
@@ -93,14 +93,30 @@ def ad(ad_id):
     unread = messages.check_unread(user_id)
     ad = ads.get_ad(ad_id)
     expires_date = ad[8] + datetime.timedelta(days=10)
+    adcomments = comments.get_adcomments(ad_id)
     is_image = images.check_adimage(ad_id)
-    return render_template("ad.html", ad=ad, expires_date=expires_date, is_image=is_image, unread=unread)
+    return render_template("ad.html", ad=ad, expires_date=expires_date, is_image=is_image, adcomments=adcomments, unread=unread, user_id=user_id)
+
+@app.route("/add_adcomment", methods=["POST"]) ## try except? validators!!
+def add_adcomment():
+    user_id = users.user_id()
+    if user_id == 0:
+        flash("Log in to leave a comment!")
+        return redirect("/login")
+    users.check_csrf(request.form["csrf_token"])
+    content = request.form["content"]
+    ad_id = request.form["ad_id"]
+    if validators.add_adcomment(content):
+        comments.add_adcomment(content, ad_id, user_id)
+        flash("Your comment has been added!", "success")
+    return redirect("/ad/"+ad_id)  
+
 
 @app.route("/new_message",methods=["GET", "POST"])
 def new_messsage():     
     user_id = users.user_id()
     if user_id == 0:
-        flash("Log in to create a new ad!")
+        flash("Log in to send a new message!", "error")
         return redirect("/login")
     unread = messages.check_unread(user_id)
     form = request.form
@@ -116,17 +132,25 @@ def new_messsage():
                 return render_template("new_message.html", form=form, unread=unread)
             user_to_id = users.search(user_to_name)
             messages.send(user_id, user_to_id, subject, message) 
-            flash("The message has been sent!")
+            flash("The message has been sent!", "success")
             return redirect("/sent")            
         else:            
-            flash("The user doesn't exist!")
+            flash("The user doesn't exist!", "error")
             return render_template("new_message.html", form=form, unread=unread)
+
+@app.route("/new_message/<user_to>/<subject>")
+def ad_message(user_to, subject):
+    form = {}
+    form["user_to"] = user_to
+    form["subject"] = subject
+    return render_template("new_message.html", form=form)
+
 
 @app.route("/inbox")
 def inbox():
     user_id = users.user_id()
     if user_id == 0:
-        flash("Log in to create a new ad!")
+        flash("Log in to create a new ad!", "error")
         return redirect("/login")
     unread = messages.check_unread(user_id)
     msgs = messages.get_inbox(user_id)
@@ -136,7 +160,7 @@ def inbox():
 def inbox_one(msg_id):
     user_id = users.user_id()
     if user_id == 0:
-        flash("Log in to create a new ad!")
+        flash("Log in to create a new ad!", "error")
         return redirect("/login")
     unread = messages.check_unread(user_id)
     msg = messages.get_one_inbox(user_id, msg_id)
@@ -157,7 +181,7 @@ def sent():
 def sent_one(msg_id):
     user_id = users.user_id()
     if user_id == 0:
-        flash("Log in to create a new ad!")
+        flash("Log in to create a new ad!", "error")
         return redirect("/login")
     unread = messages.check_unread(user_id)
     msg = messages.get_one_sent(user_id, msg_id)
@@ -191,6 +215,14 @@ def search_result():
     results = ads.search(username, title, description, price_low, price_high, cat_id, type_id)
     return render_template("ads.html", all_ads=results, unread=unread)
 
+@app.route("/profile/<int:user_id>")
+def profile(user_id):
+    user_id = users.user_id()
+    unread = messages.check_unread(user_id)
+    user = users.get_user(user_id)    
+    is_image = images.check_userimage(user_id)
+    return render_template("profile.html", user=user, is_image=is_image, unread=unread)
+
 @app.route("/image/<int:ad_id>")
 def show_image(ad_id):    
     image = images.get_adimage(ad_id)
@@ -198,3 +230,4 @@ def show_image(ad_id):
         return image
     flash("Image could not been found")
     return redirect('/')
+
