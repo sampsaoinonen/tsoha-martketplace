@@ -9,7 +9,7 @@ def get_ads():
     return result.fetchall()
 
 def get_ad(ad_id):
-    sql = '''SELECT A.id, A.title, A.description, A.phone, A.email, A.location, A.price, A.expires, A.sent_at, 
+    sql = '''SELECT A.id, A.title, A.description, A.phone, A.email, A.location, A.price, A.expires, A.sent_at, U.id, 
     U.username, C.cat_name FROM ads A, categories C, users U, adtypes T WHERE A.id=:ad_id AND C.id=A.cat_id
     AND U.id=A.user_id AND T.id=A.type_id'''
     result = db.session.execute(sql, {"ad_id":ad_id})

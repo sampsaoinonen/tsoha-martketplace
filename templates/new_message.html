@@ -14,26 +14,19 @@
     <br>
     <div class="form-group">
         <label>Send To: </label>
-        <br>
-        {% if form %}
-        <input type="text" name="user_to" class="form-control form-control" value="{{ form.user_to }}" required>
-        {% else %}
-        <input type="text" name="user_to" class="form-control form-control" placeholder="username" required>
-        {% endif %}        
+        <br>        
+        <input type="text" name="user_to" class="form-control form-control" required {% if form %} value="{{ form.user_to }}" {% endif %} 
+        placeholder="username">
+        
         <label>Subject: </label>
-        <br>
-        {% if form %}
-        <input type="text" name="subject" class="form-control form-control" value="RE: {{ form.subject }}" required>
-        {% else %}
-        <input type="text" name="subject" class="form-control form-control" placeholder="Gibson Les Paul -09" required>
-        {% endif %}
+        <br>        
+        <input type="text" name="subject" class="form-control form-control" required {% if form %} value="{{ form.subject }}" {% endif %}
+        placeholder="Gibson Les Paul -09">
+        
         <label>Message: </label>
-        <br>
-        {% if form %}        
-        <textarea type="text" name="message" class="form-control form-control" rows="5" required>{{ form.message }}</textarea>
-        {% else %}
-        <textarea type="text" name="message" class="form-control form-control" rows="5" placeholder="..." required></textarea>
-        {% endif %}        
+        <br>               
+        <textarea type="text" name="message" class="form-control form-control" rows="5" required>{% if form %} {{ form.message }} {% endif %}</textarea>
+               
         <br>
         <button type="submit" class="btn btn-primary">Send</button>
     </div>    

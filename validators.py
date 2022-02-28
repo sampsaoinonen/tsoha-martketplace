@@ -22,8 +22,8 @@ def new_ad(title, description, phone, email, location, price, expires):
     if len(phone) > 20:
         flash("Phone number has to be at most 20 characters!", "error")
         return False
-    if len(email) > 50:
-        flash("Email address has to be at most 20 characters!", "error")
+    if len(email) > 30:
+        flash("Email address has to be at most 30 characters!", "error")
         return False
     if len(location) > 50:
         flash("Location has to be at most 50 characters!", "error")
@@ -56,10 +56,10 @@ def search(username, title, description, price_low, price_high):
         flash("Description has to be no more than 30 characters!", "error")
         return False
     if int(price_low) < 0 or int(price_low) > 9999999.99:
-        flash("Price_low has to be between 0 and 9,999,999.99", "error")
+        flash("Price Low has to be between 0 and 9,999,999.99", "error")
         return False
     if int(price_high) < 0 or int(price_high) > 10000000:
-        flash("Price_low has to be between 0 and 9,999,999.99", "error")
+        flash("Price High has to be between 0 and 10,000,000", "error")
         return False
     return True
 

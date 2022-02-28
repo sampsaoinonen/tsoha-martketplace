@@ -24,11 +24,13 @@
     <tr>
         <td> 
             <b>User:</b>
-            <a href="/users/157947">{{ad[9]}}</a>                        
+            <a href="/profile/{{ad[9]}}">{{ad[10]}}</a>                        
         </td>
-        <td align=right>                        
-            <a href="/new_message/{{ad[9]}}/{{ad[1]}}">Send message</a>
-        </td>
+        {% if user_id!=0%}
+            <td align=right>                        
+                <a href="/new_message/{{ad[10]}}/{{ad[1]}}">Send message</a>
+            </td>
+        {% endif %}
     </tr>
     <br>
     <tr>
@@ -39,7 +41,7 @@
     <tr class="bg2" style="background-color:#cae0f7">
         <td colspan=2>
             <b>Category:</b>
-            <b>{{ad[10]}}</b>         
+            <b>{{ad[11]}}</b>         
             <br>
             <b>Location:</b>
             {{ad[5]}}
@@ -69,12 +71,12 @@
 {% endfor %}
 {% if user_id!=0%}
     <form action="/add_adcomment" method="POST">
-    Your comment here{{logged_comment}}: <br>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    <textarea name="content" rows="3" cols="60"></textarea>
-    <br>
-    <input type="submit" value="Send">
-    <input type="hidden" name="ad_id" id="ad_id" value="{{ad[0]}}">    
+        Your comment here{{logged_comment}}: <br>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <textarea name="content" rows="3" cols="60"></textarea>
+        <br>
+        <input type="submit" value="Send">
+        <input type="hidden" name="ad_id" id="ad_id" value="{{ad[0]}}">    
     
     </form>
 {% endif %}

@@ -7,60 +7,55 @@
     <div class="form-group">
         <label for = "categories">Categories</label><br/>
         <select class="form-select form-select-font-size" id="cate" name="cate" required>        
-        <option label="Pick category"></option>
-        
+        <option label="Pick category REQUIRED"></option>        
         {% for cat in categories %}
         <option value={{ cat.id }}>{{ cat.cat_name }}</option>
         {% endfor %}
-        </select>        
+        </select>
+
         <label>Title: </label>
-        <br>
-        {% if form %}
-        <input type="text" name="title" class="form-control form-control" value="{{ form.subject }}" required>    
+        <br>        
+        <input type="text" name="title" class="form-control form-control" required 
+        placeholder="Gibson Les Paul -09 &#9;&#9;&#9; REQUIRED Has to be between 3 and 30 characters"
+        {% if form %} value="{{ form.title }}" {% endif %}>    
         <label>Description: </label>
-        <br>
-        {% else %}
-        <input type="text" name="title" class="form-control form-control" placeholder="Gibson Les Paul -09" required>    
-        <label>Description: </label>
-        <br>
-        {% endif %}        
-        {% if form %}
-        <textarea type="text" name="description" class="form-control form-control" rows="5 ">{{ form.description }}</textarea>        
-        {% else %}
-        <textarea type="text" name="description" class="form-control form-control" placeholder="Like new conditon Les Paul. etc." rows="5 "></textarea>
-        {% endif %}
+        <br>                        
+        <textarea type="text" name="description" class="form-control form-control" rows="5" required
+        placeholder="Like new conditon Les Paul. etc. &#9;&#9;&#9; REQUIRED Has to be between 3 and 500 characters">
+        {% if form %} {{ form.description }} {% endif %}</textarea>        
             
         <label>Phone: </label>
-        <br>
-        {% if form %}
-        <input type="tel" name="phone" class="form-control form-control" value="{{ form.phone }}">
-        {% else %}
-        <input type="tel" name="phone" class="form-control form-control" placeholder="555-001">
-        {% endif %}
+        <br>        
+        <input type="tel" name="phone" class="form-control form-control" {% if form %} value="{{ form.phone }}" {% endif %} 
+        placeholder="555-001555 &#9;&#9;&#9; Has to be at most 20 characters">
+        
         <label>Email: </label>
-        <br>
-        {% if form %}
-        <input type="email" name="email" class="form-control form-control" value="{{ form.email }}">
-        {% else %}
-        <input type="email" name="email" class="form-control form-control" placeholder="info@example.com">
-        {% endif %}
+        <br>        
+        <input type="email" name="email" class="form-control form-control" {% if form %} value="{{ form.email }}" {% endif %} 
+        placeholder="info@example.com &#9;&#9;&#9; Has to be at most 30 characters">
+        
         <label>Location: </label>
         <br>
-        <input type="text" name="location" class="form-control form-control" placeholder="Amsterdam, Netherlands">                    
+        <input type="text" name="location" class="form-control form-control" {% if form %} value="{{ form.location }}" {% endif %} 
+        placeholder="Amsterdam, Netherlands &#9;&#9;&#9; Has to be at most 50 characters">                    
+        
         <label for = "Type">Type</label>        
         <select class="form-select form-select-font-size" id="type" name="type" required>        
-        <option label="Pick type"></option>
-        
+        <option label="Pick type REQUIRED"></option>        
         {% for type in types %}
         <option value={{ type.id }}>{{ type.type_name }}</option>
         {% endfor %}
         </select>        
+        
         <label>Price: </label>
         <br>        
-        <input type="number" name="price" class="form-control form-control" placeholder="1200.00" required>        
+        <input type="number" name="price" class="form-control form-control" required {% if form %} value="{{ form.price }}" {% endif %} 
+        placeholder="1200.00 &#9;&#9;&#9; REQUIRED Has to be between 0 and 9,999,999.99">        
+        
         <label>Days until expires: </label>
         <br>
-        <input type="number" name="expires" class="form-control form-control" placeholder="10" required>
+        <input type="number" name="expires" class="form-control form-control" required {% if form %} value="{{ form.expires }}" {% endif %}
+        placeholder="10 &#9;&#9;&#9; REQUIRED Has to be between 1 and 365">
         <br>
         <label>Add a image under 1MB. Only formats .jpg .png .gif allowed!</label>
         <br>
