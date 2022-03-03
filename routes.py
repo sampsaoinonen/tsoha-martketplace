@@ -97,7 +97,7 @@ def ad(ad_id):
     is_image = images.check_adimage(ad_id)
     return render_template("ad.html", ad=ad, expires_date=expires_date, is_image=is_image, adcomments=adcomments, unread=unread, user_id=user_id)
 
-@app.route("/add_adcomment", methods=["POST"]) ## try except? validators!!
+@app.route("/add_adcomment", methods=["POST"])
 def add_adcomment():
     user_id = users.user_id()
     if user_id == 0:
@@ -215,13 +215,14 @@ def search_result():
     results = ads.search(username, title, description, price_low, price_high, cat_id, type_id)
     return render_template("ads.html", all_ads=results, unread=unread)
 
-@app.route("/profile/<int:user_id>")
-def profile(user_id):
+@app.route("/profile/<int:profile_id>")
+def profile(profile_id):
     user_id = users.user_id()
     unread = messages.check_unread(user_id)
-    user = users.get_user(user_id)    
-    is_image = images.check_userimage(user_id)
-    return render_template("profile.html", user=user, is_image=is_image, unread=unread)
+    profile = users.get_profile(profile_id)
+    usercomments = comments.get_usercomments(profile_id)
+    is_image = images.check_userimage(profile_id)
+    return render_template("profile.html", profile=profile, usercomments=usercomments, is_image=is_image, unread=unread)
 
 @app.route("/image/<int:ad_id>")
 def show_image(ad_id):    
