@@ -76,7 +76,7 @@ def image_type(filename):
     extensions = [".jpg", "jpeg", "gif", "png"]
     return filename.lower().endswith(tuple(extensions)) 
 
-def add_adcomment(content):
+def add_comment(content):
     if len(content) < 1 or len(content) > 500:
         flash("Comment has to be between 1 and 500 characters!", "error")
         return False
