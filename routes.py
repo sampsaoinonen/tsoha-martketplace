@@ -106,7 +106,7 @@ def add_adcomment():
     users.check_csrf(request.form["csrf_token"])
     content = request.form["content"]
     ad_id = request.form["ad_id"]
-    if validators.add_adcomment(content):
+    if validators.add_comment(content):
         comments.add_adcomment(content, ad_id, user_id)
         flash("Your comment has been added!", "success")
     return redirect("/ad/"+ad_id)  
@@ -223,6 +223,20 @@ def profile(profile_id):
     usercomments = comments.get_usercomments(profile_id)
     is_image = images.check_userimage(profile_id)
     return render_template("profile.html", profile=profile, usercomments=usercomments, is_image=is_image, unread=unread)
+
+@app.route("/add_usercomment", methods=["POST"])
+def add_usercomment():
+    user_id = users.user_id()
+    if user_id == 0:
+        flash("Log in to leave a comment!")
+        return redirect("/login")
+    users.check_csrf(request.form["csrf_token"])
+    content = request.form["content"]
+    profile_id = request.form["profile_id"]
+    if validators.add_comment(content):
+        comments.add_usercomment(content, profile_id, user_id)
+        flash("Your comment has been added!", "success")
+    return redirect("/profile/"+profile_id) 
 
 @app.route("/image/<int:ad_id>")
 def show_image(ad_id):    
