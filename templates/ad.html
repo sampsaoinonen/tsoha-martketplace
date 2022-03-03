@@ -6,8 +6,7 @@
   padding: 5px;
 }
 </style>
-<button onclick="history.back()" class="btn btn-outline-primary">Go Back</button>
-<br>
+
 <table cellspacing=0 cellpadding=0 border=0 width="100%">
     <tr class="bg2" style="background-color:#cae0f7">
         <td class="title" width="95%">
@@ -27,8 +26,11 @@
             <a href="/profile/{{ad[9]}}">{{ad[10]}}</a>                        
         </td>
         {% if user_id!=0%}
-            <td align=right>                        
-                <a href="/new_message/{{ad[10]}}/{{ad[1]}}">Send message</a>
+            <td align=right>
+                                        
+                <a href="/new_message/{{ad[10]}}/{{ad[1]}}">
+                    <button class="btn btn-primary px-2 ms-1">Send message</button>
+                </a>
             </td>
         {% endif %}
     </tr>
@@ -71,7 +73,8 @@
 {% endfor %}
 {% if user_id!=0%}
     <form action="/add_adcomment" method="POST">
-        Your comment here{{logged_comment}}: <br>
+        Your comment here: 
+        <br>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         <textarea name="content" rows="3" cols="60"></textarea>
         <br>
