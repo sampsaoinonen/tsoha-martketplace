@@ -59,6 +59,13 @@ CREATE TABLE adcomments (
     content TEXT,
     sent_at TIMESTAMP DEFAULT NOW(),    
     ad_id INTEGER REFERENCES ads,
-    user_id INTEGER REFERENCES users
-	
+    user_id INTEGER REFERENCES users	
+);
+
+CREATE TABLE usercomments (
+    id SERIAL PRIMARY KEY,
+    content TEXT,
+    sent_at TIMESTAMP DEFAULT NOW(),
+    commentator_id INTEGER REFERENCES users,
+    profile_id INTEGER REFERENCES users	
 );
