@@ -44,10 +44,10 @@ def search(username):
         return False
     return message_id[0]
 
-def get_user(id):
-    sql = "SELECT id, username, description FROM users WHERE id=:id"
+def get_profile(id):
+    sql = "SELECT U.id, U.username, U.description, A.id, A.title FROM users U, ads A WHERE U.id=:id AND U.id=A.user_id"
     result = db.session.execute(sql, {"id":id})
-    user_info = result.fetchone()
+    user_info = result.fetchall()
     if not user_info:
         return False
     return user_info
