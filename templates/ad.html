@@ -25,7 +25,7 @@
             <b>User:</b>
             <a href="/profile/{{ad[9]}}">{{ad[10]}}</a>                        
         </td>
-        {% if user_id!=0%}
+        {% if session.user_id %}
             <td align=right>
                                         
                 <a href="/new_message/{{ad[10]}}/{{ad[1]}}">
@@ -37,7 +37,7 @@
     <br>
     <tr>
         <td>
-            {{ad[2]}}
+            {{ad[2]}}            
         </td>
     </tr>                            
     <tr class="bg2" style="background-color:#cae0f7">
@@ -71,7 +71,7 @@
 <br>
 <br>
 {% endfor %}
-{% if user_id!=0%}
+{% if session.user_id %}
     <form action="/add_adcomment" method="POST">
         Your comment here: 
         <br>

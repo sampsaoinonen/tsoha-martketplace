@@ -7,7 +7,7 @@ import datetime
 def index():            
     user_id = users.user_id()
     unread = messages.check_unread(user_id)
-    return render_template("index.html", user_id=user_id, unread=unread)
+    return render_template("index.html", unread=unread)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -95,7 +95,7 @@ def ad(ad_id):
     expires_date = ad[8] + datetime.timedelta(days=10)
     adcomments = comments.get_adcomments(ad_id)
     is_image = images.check_adimage(ad_id)
-    return render_template("ad.html", ad=ad, expires_date=expires_date, is_image=is_image, adcomments=adcomments, unread=unread, user_id=user_id)
+    return render_template("ad.html", ad=ad, expires_date=expires_date, is_image=is_image, adcomments=adcomments, unread=unread)
 
 @app.route("/add_adcomment", methods=["POST"])
 def add_adcomment():
@@ -234,7 +234,7 @@ def add_usercomment():
     content = request.form["content"]
     profile_id = request.form["profile_id"]
     if validators.add_comment(content):
-        comments.add_usercomment(content, profile_id, user_id)
+        comments.add_usercomment(content, user_id, profile_id)
         flash("Your comment has been added!", "success")
     return redirect("/profile/"+profile_id) 
 
