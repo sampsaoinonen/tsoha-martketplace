@@ -140,10 +140,15 @@ def new_messsage():
 
 @app.route("/new_message/<user_to>/<subject>")
 def ad_message(user_to, subject):
+    user_id = users.user_id()
+    if user_id == 0:
+        flash("Log in to create a new ad!", "error")
+        return redirect("/login")
+    unread = messages.check_unread(user_id)
     form = {}
     form["user_to"] = user_to
     form["subject"] = subject
-    return render_template("new_message.html", form=form)
+    return render_template("new_message.html", form=form, unread=unread)
 
 
 @app.route("/inbox")
@@ -236,7 +241,33 @@ def add_usercomment():
     if validators.add_comment(content):
         comments.add_usercomment(content, user_id, profile_id)
         flash("Your comment has been added!", "success")
-    return redirect("/profile/"+profile_id) 
+    return redirect("/profile/"+profile_id)
+
+@app.route("/edit_profile", methods=["GET", "POST"])
+def edit_profile():
+    user_id = users.user_id()
+    if user_id == 0:
+        flash("Log in to edit your profile!")
+        return redirect("/login")
+    unread = messages.check_unread(user_id)
+    profile = users.get_profile(user_id)
+    if request.method == "GET":        
+        return render_template("edit_profile.html", profile=profile, unread=unread)
+    if request.method == "POST":
+        users.check_csrf(request.form["csrf_token"])
+        description = request.form["description"]
+        file = request.files["file"]
+        if validators.update_description(description):
+            users.update_description(description, user_id)
+        if file:
+            data = file.read()
+            image_name = file.filename         
+            if not validators.image(image_name, len(data)):
+                return redirect("/edit_profile")
+            if images.check_userimage(user_id):
+                images.delete_userimage(user_id)
+            images.add_userimage(image_name, user_id, data)
+        return redirect("/profile/"+str(user_id))
 
 @app.route("/image/<int:ad_id>")
 def show_image(ad_id):    
@@ -246,3 +277,10 @@ def show_image(ad_id):
     flash("Image could not been found")
     return redirect('/')
 
+@app.route("/userimage/<int:user_id>")
+def show_userimage(user_id):    
+    image = images.get_userimage(user_id)
+    if image:
+        return image
+    flash("Image could not been found")
+    return redirect('/')

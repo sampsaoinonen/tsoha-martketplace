@@ -51,3 +51,7 @@ def get_profile(id):
     if not user_info:
         return False
     return user_info
+
+def update_description(description, user_id):    
+    db.session.execute("UPDATE users SET description=:description WHERE id=:user_id",{"description":description, "user_id":user_id})
+    db.session.commit()

@@ -26,7 +26,7 @@
                     </div>
                     <div class="embed-responsive embed-responsive-16by9">
                         {% if is_image%}
-                        <img alt="Card image cap" class="card-img-top embed-responsive-item" src="/image/{{profile[0]}}"/>
+                        <img alt="Card image cap" class="card-img-top embed-responsive-item" src="/userimage/{{profile[0][0]}}"/>
                         {% else %}
                         <img alt="Card image cap" class="card-img-top embed-responsive-item" src="/static/images/generic_user.jpg"/>
                         {% endif %}
@@ -59,7 +59,7 @@
                     <div class="text-start mb-1-6 wow fadeIn">
                         <div class="mb-4" style="text-align: center;">
                             {% if session.user_id == profile[0][0] %}
-                                <a href="/profile/{{profile[1]}}/edit">                         
+                                <a href="/edit_profile">                         
                                     <button class="btn btn-primary px-4 ms-3">Edit profile</button>
                                 </a>
                             {% endif %}

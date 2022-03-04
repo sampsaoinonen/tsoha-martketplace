@@ -81,3 +81,9 @@ def add_comment(content):
         flash("Comment has to be between 1 and 500 characters!", "error")
         return False
     return True
+
+def update_description(description):
+    if len(description) > 500:
+        flash("Description has to be at most 500 characters!", "error")
+        return False
+    return True
