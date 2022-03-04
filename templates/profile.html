@@ -86,7 +86,7 @@
                             {% endfor %}
                         </div>
                     </div>
-                    {% if session.user_id!=0%}
+                    {% if session.user_id %}
                     <form action="/add_usercomment" method="POST">
                         Your comment here: <br>
                         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
