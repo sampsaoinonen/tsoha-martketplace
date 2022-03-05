@@ -9,7 +9,7 @@
 
 {% if session.user_id == ad[13] %}
 <div class="col-md-3 mb-2 justify-content-center mb-md-0">
-    <a href="/ad/{{ad[0]}}/edit"> <button class="btn btn-outline-danger px-3 ms-2">Delete ad</button></a>
+    <a href="/ad/{{ad[0]}}/delete"> <button class="btn btn-outline-danger px-3 ms-2">Delete ad</button></a>
     <a href="/ad/{{ad[0]}}/edit"><button class="btn btn-outline-success px-3 ms-2">Edit ad</button></a>    
 </div>    
 {% endif %}
@@ -17,7 +17,7 @@
 <table cellspacing=0 cellpadding=0 border=0 width="100%">
     <tr class="bg2" style="background-color:#cae0f7">
         <td class="title" width="95%">
-            <b>For sale:</b>
+            <b>{{ad[12]}}:</b>
         <h3>{{ad[1]}}</h3>
         </td>        
         <td align=right width="100">            
@@ -50,7 +50,7 @@
     <tr class="bg2" style="background-color:#cae0f7">
         <td colspan=2>
             <b>Category:</b>
-            <b>{{ad[11]}}</b>         
+            {{ad[11]}}
             <br>
             <b>Location:</b>
             {{ad[5]}}
