@@ -108,7 +108,7 @@ def edit_ad(ad_id):
         return render_template("new_ad.html", form=ad, categories=categories, types=types, unread=unread)
     if request.method == "POST":
         form = request.form
-        users.check_csrf(request.form["csrf_token"])     
+        users.check_csrf(request.form["csrf_token"])
         cat_id = request.form["cate"]        
         title = request.form["title"]
         description = request.form["description"]
@@ -143,7 +143,7 @@ def add_adcomment():
     if validators.add_comment(content):
         comments.add_adcomment(content, ad_id, user_id)
         flash("Your comment has been added!", "success")
-    return redirect("/ad/"+ad_id)  
+    return redirect("/ad/" + ad_id)  
 
 
 @app.route("/new_message",methods=["GET", "POST"])

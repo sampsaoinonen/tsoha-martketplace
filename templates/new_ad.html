@@ -2,10 +2,10 @@
 {% block title %} 2 Many Gittars {% endblock %}
 {% block content %}
 {%if request.path.startswith("/new_ad")%}
-<h1>Create a new add</h1>
+<h1>Create a new ad</h1>
 <form action="/new_ad" onsubmit="return validateForm()" method="POST" enctype="multipart/form-data">
 {% else %}
-<h1>Edit your add</h1>
+<h1>Edit your ad</h1>
 <form action="edit" onsubmit="return validateForm()" method="POST" enctype="multipart/form-data">
 {% endif %}
 

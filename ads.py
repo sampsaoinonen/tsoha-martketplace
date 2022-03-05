@@ -29,8 +29,7 @@ def update_ad(ad_id, title, description, phone, email, location, price, expires,
     expires=:expires, user_id=:user_id, cat_id=:cat_id, type_id=:type_id WHERE id=:ad_id"""
     result = db.session.execute(sql, {"ad_id":ad_id, "title":title, "description":description, "phone":phone, "email":email,
     "location":location, "price":price, "expires":expires, "user_id":user_id, "cat_id":cat_id, "type_id":type_id})
-    db.session.commit()
-    
+    db.session.commit()    
 
 def get_cats():
     result = db.session.execute("SELECT id, cat_name FROM categories")
