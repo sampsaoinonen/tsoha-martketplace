@@ -2,7 +2,8 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT UNIQUE,
     description TEXT,
-    password TEXT
+    password TEXT,
+    admin BOOLEAN DEFAULT false
 );
 
 CREATE TABLE ads (
@@ -15,9 +16,9 @@ CREATE TABLE ads (
     price DECIMAL(7,2),
     expires INTEGER,
     sent_at TIMESTAMP DEFAULT NOW(),
-    user_id INTEGER REFERENCES users,
+    user_id INTEGER REFERENCES users ON DELETE CASCADE,
     cat_id INTEGER REFERENCES categories,
-    type_id INTEGER REFERENCES adtypes
+    type_id INTEGER REFERENCES ad_types
 );
 
 CREATE TABLE categories (
@@ -25,22 +26,22 @@ CREATE TABLE categories (
     cat_name TEXT UNIQUE
 );
 
-CREATE TABLE adtypes (
+CREATE TABLE ad_types (
     id SERIAL PRIMARY KEY,    
     type_name TEXT UNIQUE
 );
 
-CREATE TABLE userimages (
+CREATE TABLE user_images (
     id SERIAL PRIMARY KEY,
     image_name TEXT,
-    user_id INTEGER REFERENCES users,
+    user_id INTEGER REFERENCES users ON DELETE CASCADE,
     data BYTEA
 );
 
-CREATE TABLE adimages (
+CREATE TABLE ad_images (
     id SERIAL PRIMARY KEY,
     image_name TEXT,
-    ad_id INTEGER REFERENCES ads,
+    ad_id INTEGER REFERENCES ads ON DELETE CASCADE,
     data BYTEA
 );
 
@@ -54,18 +55,18 @@ CREATE TABLE messages (
     seen BOOLEAN DEFAULT false
 );
 
-CREATE TABLE adcomments (
+CREATE TABLE ad_comments (
     id SERIAL PRIMARY KEY,
     content TEXT,
     sent_at TIMESTAMP DEFAULT NOW(),    
-    ad_id INTEGER REFERENCES ads,
-    user_id INTEGER REFERENCES users	
+    ad_id INTEGER REFERENCES ads ON DELETE CASCADE,
+    user_id INTEGER REFERENCES users ON DELETE CASCADE	
 );
 
-CREATE TABLE usercomments (
+CREATE TABLE user_comments (
     id SERIAL PRIMARY KEY,
     content TEXT,
     sent_at TIMESTAMP DEFAULT NOW(),
-    commentator_id INTEGER REFERENCES users,
-    profile_id INTEGER REFERENCES users	
+    commentator_id INTEGER REFERENCES users ON DELETE CASCADE,
+    profile_id INTEGER REFERENCES users ON DELETE CASCADE	
 );
