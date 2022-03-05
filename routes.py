@@ -138,7 +138,7 @@ def delete_ad(ad_id):
     if not ads.get_ad(ad_id):
         flash("Ad deleted succesfully!", "success")
         return redirect("/browse")
-    flash("You are able to delete only your own ads!", "error")
+    flash("You don't have the rights to delete this ad!", "error")
     return redirect("/ad/" + str(ad_id))
 
 @app.route("/add_ad_comment", methods=["POST"])
@@ -316,13 +316,10 @@ def edit_profile(profile_id):
 @app.route("/profile/<int:profile_id>/delete")
 def delete_profile(profile_id):
     user_id = users.user_id()
-    users.delete_user(user_id, profile_id)
-    print("okei")
+    users.delete_user(user_id, profile_id)    
     if not users.get_profile(profile_id):
         if user_id == profile_id:
-            users.logout()
-            print("logoutti")
-        print("okei")        
+            users.logout()                
         flash("Profile deleted succesfully!", "success")        
         return redirect("/")
     flash("You have no permission to delete this profile!", "error")

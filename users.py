@@ -5,19 +5,21 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from secrets import token_hex
 
 def login(username, password):
-    sql = "SELECT id, password FROM users WHERE username=:username"
+    sql = "SELECT id, password, admin FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
     if not user:
         return False    
     if check_password_hash(user.password, password):
         session["user_id"] = user.id
+        session["admin"] = user.admin
         session["csrf_token"] = token_hex(16)
         return True    
     return False
 
 def logout():
     del session["user_id"]
+    del session["admin"]
     del session["csrf_token"]
 
 def register(username, password):

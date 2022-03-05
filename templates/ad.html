@@ -7,7 +7,7 @@
 }
 </style>
 
-{% if session.user_id == ad[13] %}
+{% if session.user_id == ad[13] or session.admin %}
 <div class="col-md-3 mb-2 justify-content-center mb-md-0">
     <a href="/ad/{{ad[0]}}/delete"> <button class="btn btn-outline-danger px-3 ms-2">Delete ad</button></a>
     <a href="/ad/{{ad[0]}}/edit"><button class="btn btn-outline-success px-3 ms-2">Edit ad</button></a>    
@@ -60,6 +60,9 @@
             <br>
             <b>Email:</b>
             {{ad[4]}}
+            <br>
+            <b>Price:</b>
+            {{ad[6]}}
             <br>            
         </td>
     <tr>
