@@ -9,6 +9,7 @@
 
 {% if session.user_id == ad[13] %}
 <div class="col-md-3 mb-2 justify-content-center mb-md-0">
+    <a href="/ad/{{ad[0]}}/edit"> <button class="btn btn-outline-danger px-3 ms-2">Delete ad</button></a>
     <a href="/ad/{{ad[0]}}/edit"><button class="btn btn-outline-success px-3 ms-2">Edit ad</button></a>    
 </div>    
 {% endif %}

@@ -26,11 +26,11 @@
   <br>
   <table>
     <th>Subject</th>
-    {%if request.path.startswith("/inbox")%}
+    {% if request.path.startswith("/inbox") %}
     <th>Sender</th>
-    {%else%}
+    {% else %}
     <th>Sent to</th>
-  {% endif %}
+    {% endif %}
     <th>Sent at</th>   
           
   <tr>    
