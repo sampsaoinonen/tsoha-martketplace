@@ -38,7 +38,7 @@
 
                 <div class="card-body p-1-9 p-xl-5" style="text-align: center;">                    
                     <div class="mb-2" style="text-align: center;">                                            
-                        <span class="bg-secondary p-1 px-4 rounded text-white">User</span>
+                        <span class="bg-secondary p-1 px-4 rounded text-white">{% if profile[0][5] %}Admin{% else %}User{% endif %}</span>
                     </div>
                     <div class="embed-responsive embed-responsive-16by9">
                         {% if is_image%}

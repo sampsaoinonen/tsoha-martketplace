@@ -48,7 +48,7 @@ def search(username):
     return message_id[0]
 
 def get_profile(id):
-    sql = "SELECT U.id, U.username, U.description, A.id, A.title FROM users U LEFT JOIN ads A ON U.id=A.user_id WHERE U.id=:id"
+    sql = "SELECT U.id, U.username, U.description, A.id, A.title, U.admin FROM users U LEFT JOIN ads A ON U.id=A.user_id WHERE U.id=:id"
     result = db.session.execute(sql, {"id":id})
     user_info = result.fetchall()
     if not user_info:
