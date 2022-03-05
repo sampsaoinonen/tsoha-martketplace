@@ -14,18 +14,30 @@
       padding: 8px;
     }
     h1 {
+        font-size:300%;
         text-align: center;
     }
     
   </style>
-<h1>Profile</h1> 
+{% if session.user_id == profile[0][0] %}
+<div class="mb-4 text-primary" style="text-align: left;">
+    <a href="/profile/{{profile[0][0]}}/delete"> 
+        <button class="btn btn-outline-danger px-3 ms-2" style="float: left;" >Delete profile and all info related!</button>
+    </a>
+</div>
+<div class="mb-4 text-primary" style="text-align: left;">                            
+    <a href="/profile/{{profile[0][0]}}/edit_profile">
+        <button class="btn btn-outline-success px-4 ms-3">Edit profile</button>
+    </a>
+</div>
+{% endif %}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
             <div class="card border-5 shadow">                           
 
                 <div class="card-body p-1-9 p-xl-5" style="text-align: center;">                    
-                    <div class="mb-2" style="text-align: center;">                        
+                    <div class="mb-2" style="text-align: center;">                                            
                         <span class="bg-secondary p-1 px-4 rounded text-white">User</span>
                     </div>
                     <div class="embed-responsive embed-responsive-16by9">
@@ -36,8 +48,8 @@
                         {% endif %}
                      </div>
                     
-                    <div class="mb-4" style="text-align: center;">
-                        <h3 class="h4 mb-3">{{profile[0][1]}}</h3>                        
+                    <div class="mb-4 text-primary" style="text-align: center;">
+                        <h3 class="mb-3">{{profile[0][1]}}</h3>                        
                     </div>
                     <div class="mb-4">
                         {% if session.user_id %}
@@ -47,38 +59,40 @@
                         {% endif %}
                     </div>
                     <table> 
-                        <th>Ads</th>                         
+                        <th>Ads</th>
+                        {% if profile[0][3] %}                         
                         {% for prof in profile %}        
                         <tr>                              
                             <th><a href="/ad/{{prof[3]}}">{{prof[4]}}</a></th>                                                      
                         </tr>
                         {% endfor %}
+                        {% else %}
+                        <tr>                              
+                            <th>This user has no ads</th>                                                      
+                        </tr>
+                        {% endif %}
                     </table>                                                         
                 </div>
             </div>
         </div>
-        <div class="col-lg-8">
+        <div class="col-md-6 col-lg-8">
             <div class="ps-lg-1-6 ps-xl-5">
                 <div class="mb-5 wow fadeIn">
-                    <div class="text-start mb-1-6 wow fadeIn">
-                        <div class="mb-4" style="text-align: center;">
-                            {% if session.user_id == profile[0][0] %}
-                                <a href="/edit_profile">                         
-                                    <button class="btn btn-outline-success px-4 ms-3">Edit profile</button>
-                                </a>
-                            {% endif %}
-                        </div>
-                        <h2 class="h1 mb-0 text-primary">Description</h2>
+                    <div style="height: 250px;">
+                    <div class="text-start mb-1-6 wow fadeIn">                        
+                        <h2 class="mb-6 text-primary">Description</h2>
                     </div>
                     {% if profile[0][2] %}                 
                     <p>{{profile[0][2]}}</p>
                     {% else %}
-                    <p>The user has not added description</p>
+                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat</p>
                     {% endif %}
                 </div>
+                </div>
+                <hr>
                 <div class="mb-5 wow fadeIn">
                     <div class="text-start mb-1-6 wow fadeIn">
-                        <h2 class="mb-4 text-primary">Comments</h2>
+                        <h3 class="mb-4 text-primary">Comments</h3>
                     </div>
                     
                     <div class="mb-5 wow fadeIn">
@@ -101,7 +115,7 @@
                     
                     </form>
                     {% endif %}
-                </div>                
+                </div>                               
             </div>
         </div>
     </div>
