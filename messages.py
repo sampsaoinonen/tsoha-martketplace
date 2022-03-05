@@ -8,27 +8,25 @@ def send(user_from, user_to, subject, message):
 
 def get_one_inbox(user_to, message_id):
     sql = '''SELECT M.id, M.user_from, M.user_to, M.subject, M.message, M.sent_at, M.seen, U.username 
-    FROM messages M, users U WHERE M.id=:message_id AND U.id=M.user_from AND M.user_to=:user_to'''
+    FROM messages M LEFT JOIN users U ON U.id=M.user_from WHERE M.id=:message_id AND M.user_to=:user_to'''
     result = db.session.execute(sql, {"user_to":user_to, "message_id":message_id})
     return result.fetchone()
 
 def get_one_sent(user_from, message_id):
     sql = '''SELECT M.id, M.user_from, M.user_to, M.subject, M.message, M.sent_at, M.seen, U.username 
-    FROM messages M, users U WHERE M.id=:message_id AND U.id=M.user_to AND M.user_from=:user_from'''
+    FROM messages M LEFT JOIN users U ON U.id=M.user_to WHERE M.id=:message_id AND M.user_from=:user_from'''
     result = db.session.execute(sql, {"user_from":user_from, "message_id":message_id})
     return result.fetchone()
 
 def get_inbox(user_to):
-    sql = '''SELECT M.id, M.user_from, M.user_to, M.subject, M.message, M.sent_at, M.seen, U.username
-    FROM messages M, users U WHERE M.user_to=:user_to and U.id=M.user_from GROUP BY M.id, U.id
-    ORDER BY sent_at DESC'''
+    sql = """SELECT M.id, M.user_from, M.user_to, M.subject, M.message, M.sent_at, M.seen, U.username
+    FROM messages M LEFT JOIN users U ON U.id=M.user_from WHERE M.user_to=:user_to ORDER BY sent_at DESC"""
     result = db.session.execute(sql, {"user_to":user_to})
     return result.fetchall()
 
 def get_sent(user_from):
     sql = '''SELECT M.id, M.user_from, M.user_to, M.subject, M.message, M.sent_at, M.seen, U.username
-    FROM messages M, users U WHERE M.user_from=:user_from and U.id=M.user_to GROUP BY M.id, U.id
-    ORDER BY sent_at DESC'''
+    FROM messages M LEFT JOIN users U ON U.id=M.user_to WHERE M.user_from=:user_from ORDER BY sent_at DESC'''
     result = db.session.execute(sql, {"user_from":user_from})
     return result.fetchall()
 

@@ -31,7 +31,7 @@ def update_ad(ad_id, title, description, phone, email, location, price, expires,
     "location":location, "price":price, "expires":expires, "user_id":user_id, "cat_id":cat_id, "type_id":type_id})
     db.session.commit()
 
-def delete_ad(user_id, ad_id):    
+def delete_ad(user_id, ad_id):
     db.session.execute("DELETE FROM ads WHERE id=:ad_id AND user_id=:user_id",{"ad_id":ad_id, "user_id":user_id})
     db.session.commit()
 

@@ -47,8 +47,8 @@ CREATE TABLE ad_images (
 
 CREATE TABLE messages (
     id SERIAL PRIMARY KEY,
-    user_from INTEGER REFERENCES users,
-    user_to INTEGER REFERENCES users,
+    user_from INTEGER REFERENCES users ON DELETE SET NULL,
+    user_to INTEGER REFERENCES users ON DELETE SET NULL,
     subject TEXT,
     message TEXT,
     sent_at TIMESTAMP DEFAULT NOW(),

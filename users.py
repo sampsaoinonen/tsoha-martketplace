@@ -1,3 +1,4 @@
+from os import truncate
 from db import db
 from flask import session, abort
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -45,7 +46,7 @@ def search(username):
     return message_id[0]
 
 def get_profile(id):
-    sql = "SELECT U.id, U.username, U.description, A.id, A.title FROM users U, ads A WHERE U.id=:id AND U.id=A.user_id"
+    sql = "SELECT U.id, U.username, U.description, A.id, A.title FROM users U LEFT JOIN ads A ON U.id=A.user_id WHERE U.id=:id"
     result = db.session.execute(sql, {"id":id})
     user_info = result.fetchall()
     if not user_info:
@@ -55,3 +56,10 @@ def get_profile(id):
 def update_description(description, user_id):    
     db.session.execute("UPDATE users SET description=:description WHERE id=:user_id",{"description":description, "user_id":user_id})
     db.session.commit()
+
+def delete_user(user_id, profile_id):
+    if user_id == profile_id:
+        db.session.execute("DELETE FROM users WHERE id=:profile_id",{"user_id":user_id, "profile_id":profile_id})
+        db.session.commit()
+        return True
+    return False

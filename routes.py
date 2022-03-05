@@ -287,14 +287,14 @@ def add_user_comment():
         flash("Your comment has been added!", "success")
     return redirect("/profile/" + profile_id)
 
-@app.route("/edit_profile", methods=["GET", "POST"])
-def edit_profile():
+@app.route("/profile/<int:profile_id>/edit_profile", methods=["GET", "POST"])
+def edit_profile(profile_id):
     user_id = users.user_id()
     if user_id == 0:
         flash("Log in to edit your profile!")
         return redirect("/login")
     unread = messages.check_unread(user_id)
-    profile = users.get_profile(user_id)
+    profile = users.get_profile(profile_id)
     if request.method == "GET":        
         return render_template("edit_profile.html", profile=profile, unread=unread)
     if request.method == "POST":
@@ -307,11 +307,26 @@ def edit_profile():
             data = file.read()
             image_name = file.filename         
             if not validators.image(image_name, len(data)):
-                return redirect("/edit_profile")
+                return redirect("/")
             if images.check_user_image(user_id):
                 images.delete_user_image(user_id)
             images.add_user_image(image_name, user_id, data)
         return redirect("/profile/" + str(user_id))
+
+@app.route("/profile/<int:profile_id>/delete")
+def delete_profile(profile_id):
+    user_id = users.user_id()
+    users.delete_user(user_id, profile_id)
+    print("okei")
+    if not users.get_profile(profile_id):
+        if user_id == profile_id:
+            users.logout()
+            print("logoutti")
+        print("okei")        
+        flash("Profile deleted succesfully!", "success")        
+        return redirect("/")
+    flash("You have no permission to delete this profile!", "error")
+    return redirect("/")
 
 @app.route("/image/<int:ad_id>")
 def show_image(ad_id):    
