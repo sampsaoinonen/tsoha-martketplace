@@ -55,13 +55,12 @@ def get_profile(id):
         return False
     return user_info
 
-def update_description(description, user_id):    
-    db.session.execute("UPDATE users SET description=:description WHERE id=:user_id",{"description":description, "user_id":user_id})
-    db.session.commit()
+def update_description(description, user_id, profile_id):
+    if user_id == profile_id or session["admin"]:    
+        db.session.execute("UPDATE users SET description=:description WHERE id=:profile_id",{"description":description, "profile_id":profile_id})
+        db.session.commit()
 
 def delete_user(user_id, profile_id):
-    if user_id == profile_id:
-        db.session.execute("DELETE FROM users WHERE id=:profile_id",{"user_id":user_id, "profile_id":profile_id})
+    if user_id == profile_id or session["admin"]:
+        db.session.execute("DELETE FROM users WHERE id=:profile_id",{"profile_id":profile_id})
         db.session.commit()
-        return True
-    return False

@@ -19,7 +19,7 @@
     }
     
   </style>
-{% if session.user_id == profile[0][0] %}
+{% if session.user_id == profile[0][0] or session.admin %}
 <div class="mb-4 text-primary" style="text-align: left;">
     <a href="/profile/{{profile[0][0]}}/delete"> 
         <button class="btn btn-outline-danger px-3 ms-2" style="float: left;" >Delete profile and all info related!</button>

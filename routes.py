@@ -302,7 +302,7 @@ def edit_profile(profile_id):
         description = request.form["description"]
         file = request.files["file"]
         if validators.update_description(description):
-            users.update_description(description, user_id)
+            users.update_description(description, user_id, profile_id)
         if file:
             data = file.read()
             image_name = file.filename         
