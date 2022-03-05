@@ -11,6 +11,10 @@ def add_userimage(image_name, user_id, data):
     result = db.session.execute(sql, {"image_name":image_name,"user_id":user_id, "data":data})    
     db.session.commit()
 
+def delete_adimage(ad_id):
+    db.session.execute("DELETE FROM adimages WHERE ad_id=:ad_id",{"ad_id":ad_id})
+    db.session.commit()
+
 def delete_userimage(user_id):
     db.session.execute("DELETE FROM userimages WHERE user_id=:user_id",{"user_id":user_id})
     db.session.commit()

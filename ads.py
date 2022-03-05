@@ -8,9 +8,9 @@ def get_ads():
     result = db.session.execute(sql)
     return result.fetchall()
 
-def get_ad(ad_id):
+def get_ad(ad_id): # C.id and T.id renamed for edit_ad to find saved values for categories and types
     sql = """SELECT A.id, A.title, A.description, A.phone, A.email, A.location, A.price, A.expires, A.sent_at, U.id, 
-    U.username, C.cat_name FROM ads A, categories C, users U, adtypes T WHERE A.id=:ad_id AND C.id=A.cat_id
+    U.username, C.cat_name, T.type_name, U.id, C.id AS cate, T.id AS type FROM ads A, categories C, users U, adtypes T WHERE A.id=:ad_id AND C.id=A.cat_id
     AND U.id=A.user_id AND T.id=A.type_id"""
     result = db.session.execute(sql, {"ad_id":ad_id})
     return result.fetchone()
@@ -23,6 +23,14 @@ def add_ad(title, description, phone, email, location, price, expires, user_id, 
     "location":location,"price":price, "expires":expires, "user_id":user_id, "cat_id":cat_id, "type_id":type_id})
     db.session.commit()
     return result.fetchone()[0]
+
+def update_ad(ad_id, title, description, phone, email, location, price, expires, user_id, cat_id, type_id):
+    sql = """UPDATE ads SET title=:title, description=:description, phone=:phone, email=:email, location=:location, price=:price,
+    expires=:expires, user_id=:user_id, cat_id=:cat_id, type_id=:type_id WHERE id=:ad_id"""
+    result = db.session.execute(sql, {"ad_id":ad_id, "title":title, "description":description, "phone":phone, "email":email,
+    "location":location, "price":price, "expires":expires, "user_id":user_id, "cat_id":cat_id, "type_id":type_id})
+    db.session.commit()
+    
 
 def get_cats():
     result = db.session.execute("SELECT id, cat_name FROM categories")

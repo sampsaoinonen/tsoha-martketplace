@@ -1,14 +1,24 @@
 {% extends "layout.html" %}
 {% block title %} 2 Many Gittars {% endblock %}
 {% block content %}
+{%if request.path.startswith("/new_ad")%}
 <h1>Create a new add</h1>
 <form action="/new_ad" onsubmit="return validateForm()" method="POST" enctype="multipart/form-data">
+{% else %}
+<h1>Edit your add</h1>
+<form action="edit" onsubmit="return validateForm()" method="POST" enctype="multipart/form-data">
+{% endif %}
+
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         
         <div class="form-group mb-3">
             <label for = "categories">Categories</label><br/>
-            <select class="form-select" id="cate" name="cate" required>        
-            <option label="Pick category - REQUIRED">.bg-gradient-secondary</option>        
+            <select class="form-select" id="cate" name="cate" required>
+            {% if form %}
+            <option selected="selected">{{ form.cate }}</option>
+            {% else %}
+            <option label="Pick category - REQUIRED">.bg-gradient-secondary</option>
+            {% endif %}
             {% for cat in categories %}
             <option value={{ cat.id }}>{{ cat.cat_name }}</option>
             {% endfor %}
@@ -60,8 +70,12 @@
         
         <div class="form-group mb-3">
             <label for = "Type">Type</label>        
-            <select class="form-select form-select-font-size" id="type" name="type" required>        
-            <option label="Pick type REQUIRED"></option>        
+            <select class="form-select form-select-font-size" id="type" name="type" required>
+            {% if form %}
+            <option selected="selected">{{ form.type }}</option>
+            {% else %}
+            <option label="Pick category - REQUIRED">.bg-gradient-secondary</option>
+            {% endif %}                    
             {% for type in types %}
             <option value={{ type.id }}>{{ type.type_name }}</option>
             {% endfor %}
@@ -89,7 +103,10 @@
             <label>Add an image under 1MB. Only formats .jpg .png .gif allowed!</label>            
             <input type="file" name="file">
         </div>
-                
+        {%if request.path.startswith("/new_ad")%}
         <button type="submit" class="btn btn-primary">Create a New Ad</button>
+        {% else %}        
+        <button type="submit" class="btn btn-primary">Edit Ad</button>
+        {% endif %}
 </form>
 {% endblock %}

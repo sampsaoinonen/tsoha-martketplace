@@ -97,6 +97,40 @@ def ad(ad_id):
     is_image = images.check_adimage(ad_id)
     return render_template("ad.html", ad=ad, expires_date=expires_date, is_image=is_image, adcomments=adcomments, unread=unread)
 
+@app.route("/ad/<int:ad_id>/edit", methods=["GET", "POST"])
+def edit_ad(ad_id):
+    user_id = users.user_id()
+    unread = messages.check_unread(user_id)
+    categories = ads.get_cats()
+    types = ads.get_types()
+    if request.method == "GET":
+        ad = ads.get_ad(ad_id)        
+        return render_template("new_ad.html", form=ad, categories=categories, types=types, unread=unread)
+    if request.method == "POST":
+        form = request.form
+        users.check_csrf(request.form["csrf_token"])     
+        cat_id = request.form["cate"]        
+        title = request.form["title"]
+        description = request.form["description"]
+        phone = request.form["phone"]
+        email = request.form["email"]
+        location = request.form["location"]
+        type_id = request.form["type"]
+        price = request.form["price"]
+        expires = request.form["expires"]
+        if not validators.new_ad(title, description, phone, email, location, price, expires):        
+            return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)
+        ads.update_ad(ad_id, title, description, phone, email, location, price, expires, user_id, cat_id, type_id)
+        file = request.files["file"]             
+        if file:
+            data = file.read()
+            image_name = file.filename         
+            if not validators.image(image_name, len(data)):
+                return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)                                                
+            images.delete_adimage(ad_id)
+            images.add_adimage(image_name, ad_id, data)
+        return redirect("/ad/" + str(ad_id))
+
 @app.route("/add_adcomment", methods=["POST"])
 def add_adcomment():
     user_id = users.user_id()
@@ -241,7 +275,7 @@ def add_usercomment():
     if validators.add_comment(content):
         comments.add_usercomment(content, user_id, profile_id)
         flash("Your comment has been added!", "success")
-    return redirect("/profile/"+profile_id)
+    return redirect("/profile/" + profile_id)
 
 @app.route("/edit_profile", methods=["GET", "POST"])
 def edit_profile():
@@ -267,7 +301,7 @@ def edit_profile():
             if images.check_userimage(user_id):
                 images.delete_userimage(user_id)
             images.add_userimage(image_name, user_id, data)
-        return redirect("/profile/"+str(user_id))
+        return redirect("/profile/" + str(user_id))
 
 @app.route("/image/<int:ad_id>")
 def show_image(ad_id):    

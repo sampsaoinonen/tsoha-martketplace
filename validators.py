@@ -28,10 +28,10 @@ def new_ad(title, description, phone, email, location, price, expires):
     if len(location) > 50:
         flash("Location has to be at most 50 characters!", "error")
         return False    
-    if int(price) < 0 or int(price) > 9999999.99:
+    if float(price) < 0 or float(price) > 9999999.99:
         flash("Price has to be between 0 and 9,999,999.99", "error")
         return False    
-    if int(expires) < 1 or int(expires) > 365:
+    if float(expires) < 1 or float(expires) > 365:
         flash("Number of days have to be between 1 and 365!", "error")
         return False
     return True
