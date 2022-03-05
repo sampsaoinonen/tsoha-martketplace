@@ -2,7 +2,7 @@ from db import db
 
 def get_ads():
     sql = """SELECT A.id, A.title, A.description, A.phone, A.email, A.location, A.price, A.expires, A.sent_at, 
-    U.username, C.cat_name, T.type_name FROM ads A, categories C, users U, adtypes T WHERE C.id=A.cat_id AND U.id=A.user_id
+    U.username, C.cat_name, T.type_name FROM ads A, categories C, users U, ad_types T WHERE C.id=A.cat_id AND U.id=A.user_id
     AND T.id=A.type_id AND A.sent_at > current_date - A.expires GROUP BY A.id, C.id, U.id, T.id 
     ORDER BY A.sent_at DESC"""
     result = db.session.execute(sql)
@@ -10,7 +10,7 @@ def get_ads():
 
 def get_ad(ad_id): # C.id and T.id renamed for edit_ad to find saved values for categories and types
     sql = """SELECT A.id, A.title, A.description, A.phone, A.email, A.location, A.price, A.expires, A.sent_at, U.id, 
-    U.username, C.cat_name, T.type_name, U.id, C.id AS cate, T.id AS type FROM ads A, categories C, users U, adtypes T WHERE A.id=:ad_id AND C.id=A.cat_id
+    U.username, C.cat_name, T.type_name, U.id, C.id AS cate, T.id AS type FROM ads A, categories C, users U, ad_types T WHERE A.id=:ad_id AND C.id=A.cat_id
     AND U.id=A.user_id AND T.id=A.type_id"""
     result = db.session.execute(sql, {"ad_id":ad_id})
     return result.fetchone()
@@ -36,12 +36,12 @@ def get_cats():
     return result.fetchall()
 
 def get_types():
-    result = db.session.execute("SELECT id, type_name FROM adtypes")
+    result = db.session.execute("SELECT id, type_name FROM ad_types")
     return result.fetchall()
 
 def search(username, title, description, price_low, price_high, cat_id, type_id):
     sql = """SELECT A.id, A.title, A.description, A.phone, A.email, A.location, A.price, A.expires, A.sent_at, 
-    U.username, C.cat_name, T.type_name FROM ads A, categories C, users U, adtypes T WHERE C.id=A.cat_id AND U.id=A.user_id 
+    U.username, C.cat_name, T.type_name FROM ads A, categories C, users U, ad_types T WHERE C.id=A.cat_id AND U.id=A.user_id 
     AND T.id=A.type_id AND LOWER(U.username) LIKE :username AND LOWER(A.title) LIKE :title AND LOWER(A.description) 
     LIKE :description AND A.price >= :price_low AND A.price <= :price_high AND CAST(A.cat_id AS text) LIKE :cat_id AND CAST(A.type_id AS text) LIKE :type_id 
     AND A.sent_at > current_date - A.expires GROUP BY A.id, C.id, U.id, T.id ORDER BY A.sent_at DESC"""

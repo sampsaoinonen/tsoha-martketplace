@@ -72,14 +72,14 @@
 {% endif %}
 <hr>
 <h4>Comments:</h4>
-{% for adcomment in adcomments %}
-    {{adcomment[0]}}: {{adcomment[1]}}<br>
-    {{adcomment[2].strftime("%Y-%m-%d %H:%M:%S")}}
+{% for ad_comment in ad_comments %}
+    {{ad_comment[0]}}: {{ad_comment[1]}}<br>
+    {{ad_comment[2].strftime("%Y-%m-%d %H:%M:%S")}}
 <br>
 <br>
 {% endfor %}
 {% if session.user_id %}
-    <form action="/add_adcomment" method="POST">
+    <form action="/add_ad_comment" method="POST">
         Your comment here: 
         <br>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">

@@ -30,7 +30,7 @@
                     </div>
                     <div class="embed-responsive embed-responsive-16by9">
                         {% if is_image%}
-                        <img alt="Card image cap" class="card-img-top embed-responsive-item" src="/userimage/{{profile[0][0]}}"/>
+                        <img alt="Card image cap" class="card-img-top embed-responsive-item" src="/user_image/{{profile[0][0]}}"/>
                         {% else %}
                         <img alt="Card image cap" class="card-img-top embed-responsive-item" src="/static/images/generic_user.jpg"/>
                         {% endif %}
@@ -83,15 +83,15 @@
                     
                     <div class="mb-5 wow fadeIn">
                         <div class="text-start mb-1-6 wow fadeIn"></div>                    
-                            {% for usercomment in usercomments %}
-                            {{usercomment[0]}}: {{usercomment[1]}}<br>
-                            {{usercomment[2].strftime("%Y-%m-%d %H:%M:%S")}}
+                            {% for user_comment in user_comments %}
+                            {{user_comment[0]}}: {{user_comment[1]}}<br>
+                            {{user_comment[2].strftime("%Y-%m-%d %H:%M:%S")}}
                             <br>                            
                             {% endfor %}
                         </div>
                     </div>
                     {% if session.user_id %}
-                    <form action="/add_usercomment" method="POST">
+                    <form action="/add_user_comment" method="POST">
                         Your comment here: <br>
                         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                         <textarea name="content" rows="3" cols="60"></textarea>
