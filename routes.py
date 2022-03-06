@@ -43,7 +43,8 @@ def register():
             flash("Registration succesful!", "success")
             return redirect("/")
         else:
-            return render_template("error.html", error="Something went wrong. Registration was aborted!")
+            flash("Registration not succesful! Your username might be already in use.", "error")
+            return redirect("/register")
 
 @app.route("/browse")
 def browse():
@@ -158,7 +159,7 @@ def add_ad_comment():
 @app.route("/ad_comment/delete", methods=["POST"])
 def delete_ad_comment():
     user_id = users.user_id()
-    if request.method == 'POST':
+    if request.method == "POST":
         users.check_csrf(request.form["csrf_token"])
         ad_comment_id = request.form["comment_id"]
         ad_id = request.form["ad_id"]        
@@ -323,7 +324,7 @@ def add_user_comment():
 @app.route("/user_comment/delete", methods=["POST"])
 def delete_user_comment():
     user_id = users.user_id()
-    if request.method == 'POST':
+    if request.method == "POST":
         users.check_csrf(request.form["csrf_token"])
         user_comment_id = request.form["user_comment_id"]
         profile_id = request.form["profile_id"]        
@@ -379,7 +380,7 @@ def show_image(ad_id):
     if image:
         return image
     flash("Image could not been found")
-    return redirect('/')
+    return redirect("/")
 
 @app.route("/user_image/<int:user_id>")
 def show_user_image(user_id):    
@@ -387,4 +388,4 @@ def show_user_image(user_id):
     if image:
         return image
     flash("Image could not been found")
-    return redirect('/')
+    return redirect("/")
