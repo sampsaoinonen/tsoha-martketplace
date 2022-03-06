@@ -55,6 +55,11 @@ def get_profile(id):
         return False
     return user_info
 
+def search_profile(username):
+    sql = "SELECT id, username, description, admin FROM users WHERE LOWER(username) LIKE :username ORDER BY ID"    
+    result = db.session.execute(sql, {"username":"%"+username+"%"})    
+    return result.fetchall()
+
 def update_description(description, user_id, profile_id):
     if user_id == profile_id or session["admin"]:    
         db.session.execute("UPDATE users SET description=:description WHERE id=:profile_id",{"description":description, "profile_id":profile_id})

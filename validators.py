@@ -63,6 +63,12 @@ def search(username, title, description, price_low, price_high):
         return False
     return True
 
+def search_profile(username):
+    if len(username) > 20:
+        flash("Username has to be no more than 20 characters!", "error")
+        return False
+    return True
+
 def image(image_name, data_size):         
     if not image_type(image_name):
         flash("Invalid filetype!", "error")

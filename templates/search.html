@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 {% block title %} 2 Many Gittars {% endblock %}
 {% block content %}
+<div class="col justify-content-center">
+    
+    <a href="/search"><button type="button" class="btn btn-outline-primary">Search ad</button></a>
+    <a href="/search_profile"><button type="button" class="btn btn-outline-primary">Search profile</button></a>                    
+</div>
+<br>
 <h1>Search ad</h1>
 <form action="/search_result" onsubmit="return validateForm()" method="GET">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">

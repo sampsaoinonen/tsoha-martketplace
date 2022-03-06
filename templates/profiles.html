@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block title %} Browse {% endblock %}
+{% block content %}
+<h1>Profile results</h1>
+<style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #cae0f7;
+    }
+  </style>      
+  <table> 
+    <th>Username</th>    
+    <th>Description</th>
+    <th>Admin</th>     
+  {% for result in results %}         
+  <tr>      
+    <th><a href="/profile/{{result[0]}}">{{result[1]}}</a></th>    
+    <td>{{result[2]}}</td>
+    <td>{{result[3]}}</td>        
+  </tr>
+{% endfor %}
+</table>
+{% endblock %}

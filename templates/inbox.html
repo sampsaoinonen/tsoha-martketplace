@@ -18,15 +18,9 @@
       background-color: #cae0f7;
     }
   </style>
-  <h1>Received messages</h1>
+  {% include "message_buttons.html" %}
   <br>
-  <div class="col-md-3 text-end justify-content-center">
-    
-    <a href="/new_message"><button type="button" class="btn btn-outline-primary">New Message</button></a>
-    <a href="/inbox"><button type="button" class="btn btn-outline-primary">Received</button></a>                
-    <a href="/sent"><button type="button" class="btn btn-outline-primary">Sent</button></a>
-  </div>
-  <br>  
+  <h1>Received messages</h1>
   (*) unread
   <br>
   <table>

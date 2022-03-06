@@ -264,6 +264,24 @@ def search_result():
     results = ads.search(username, title, description, price_low, price_high, cat_id, type_id)
     return render_template("ads.html", all_ads=results, unread=unread)
 
+@app.route("/search_profile")
+def search_profile():
+    user_id = users.user_id()
+    unread = messages.check_unread(user_id)    
+    return render_template("search_profile.html", unread=unread)
+
+@app.route("/search_profile_result")
+def search_profile_result():    
+    user_id = users.user_id()
+    if user_id != 0:
+        users.check_csrf(request.args["csrf_token"])
+    unread = messages.check_unread(user_id)
+    username = request.args["user"].lower()
+    if not validators.search_profile(username):
+        return redirect("/search_profile")
+    results = users.search_profile(username)
+    return render_template("profiles.html", results=results, unread=unread)
+
 @app.route("/profile/<int:profile_id>")
 def profile(profile_id):
     user_id = users.user_id()
