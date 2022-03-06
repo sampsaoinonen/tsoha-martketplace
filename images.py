@@ -2,13 +2,13 @@ from flask import session, make_response
 from db import db
 
 def add_ad_image(image_name, ad_id, data):       
-    sql = '''INSERT INTO ad_images (image_name, ad_id, data) VALUES (:image_name, :ad_id, :data)'''
-    result = db.session.execute(sql, {"image_name":image_name,"ad_id":ad_id, "data":data})    
+    sql = "INSERT INTO ad_images (image_name, ad_id, data) VALUES (:image_name, :ad_id, :data)"
+    db.session.execute(sql, {"image_name":image_name,"ad_id":ad_id, "data":data})    
     db.session.commit()
 
 def add_user_image(image_name, user_id, data):  
-    sql = '''INSERT INTO user_images (image_name, user_id, data) VALUES (:image_name, :user_id, :data)'''
-    result = db.session.execute(sql, {"image_name":image_name,"user_id":user_id, "data":data})    
+    sql = "INSERT INTO user_images (image_name, user_id, data) VALUES (:image_name, :user_id, :data)"
+    db.session.execute(sql, {"image_name":image_name,"user_id":user_id, "data":data})    
     db.session.commit()
 
 def delete_ad_image(ad_id):
@@ -24,7 +24,7 @@ def get_ad_image(ad_id):
     result = db.session.execute(sql, {"ad_id":ad_id})
     data = result.fetchone()[0]
     response = make_response(bytes(data))
-    response.headers.set('Content-Type', 'image/jpeg')
+    response.headers.set("Content-Type", "image/jpeg")
     return response
 
 def get_user_image(user_id):
@@ -32,7 +32,7 @@ def get_user_image(user_id):
     result = db.session.execute(sql, {"user_id":user_id})
     data = result.fetchone()[0]
     response = make_response(bytes(data))
-    response.headers.set('Content-Type', 'image/jpeg')
+    response.headers.set("Content-Type", "image/jpeg")
     return response
 
 def check_ad_image(ad_id):
