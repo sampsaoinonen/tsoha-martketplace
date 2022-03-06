@@ -1,10 +1,14 @@
 # 2 Many Gittars
 
-2 Many Gittars is a marketplace for guitars, amps and other items related to guitars. This web application will be created using Flask and PostgreSQL-database. It will be deployed on Heroku.
+2 Many Gittars is a marketplace for guitars, amps and other items related to guitars. This web application is created using Flask and PostgreSQL-database. It is possible to test on Heroku.
 
-The app is possible to test on https://tsoha-2manygittars.herokuapp.com
+https://tsoha-2manygittars.herokuapp.com
 
-## Features
+ADMIN - account info is in LABTOOL (3rd review reply)
+
+## Plans at the Beginning
+
+### Features
 - a user can create an account as either ”user” or ”admin”
 - a user can log in and log out
 - a user can search and view ads (with or without logging in)
@@ -40,3 +44,25 @@ Basic functionalities are working pretty good and layout is almost there. User p
 - :black_square_button: an admin can remove any comment
 - :black_square_button: an admin can remove any ad
 - :black_square_button: an admin can remove any user profile
+
+## Final version
+
+- :white_check_mark: a user can have an account as either ”user” or ”admin”
+- :white_check_mark: a user can log in and log out
+- :white_check_mark: a user can search and view ads (with or without logging in)
+- :white_check_mark: a logged user has a profile where user can write description of himself/herself
+- :white_check_mark: a logged user can comment a profile and the owner can delete comments
+- :white_check_mark: a logged user can rate a profile based on how trade went  :guitar: User can comment about the trade in sellers profile
+- :white_check_mark: a logged user can create an ad with a picture(optional)
+- :white_check_mark: a logged user can comment an ad
+- :white_check_mark: a logged user can send a message to another registered user
+- :white_check_mark: a logged user can view and send messages.
+- :white_check_mark: a logged user can remove user's own ad
+- :black_square_button: a logged user can view list of user's own ad history   :guitar: This never happened 
+- :white_check_mark: an admin can remove any comment
+- :white_check_mark: an admin can remove any ad
+- :white_check_mark: an admin can remove any user profile
+
+## Final Conlusions
+
+The app is pretty close what was planned at first. "Ad history" was forgotten but everything else is included there. Thinking the workload now this project has way too much different functions and it took me a lot of time to accomplish. Still there are missing features like the app never deletes old ads, deleting messages not possible etc. which are needed.
