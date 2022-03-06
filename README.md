@@ -1,6 +1,6 @@
 # 2 Many Gittars
 
-2 Many Gittars is a marketplace for guitars, amps and other items related to guitars. This web application is created using Flask and PostgreSQL-database. It is possible to test on Heroku.
+2 Many Gittars is a marketplace for guitars, amps and other items related to guitars. This web application is created using Flask and PostgreSQL-database. It is possible to test on [Heroku](https://tsoha-2manygittars.herokuapp.com). SQL-tables can be found [here](https://github.com/sampsaoinonen/tsoha-martketplace/blob/main/SQL/schema.sql)
 
 https://tsoha-2manygittars.herokuapp.com
 
