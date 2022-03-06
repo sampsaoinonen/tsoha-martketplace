@@ -1,7 +1,7 @@
 from flask import session
 from db import db
 
-def get_ads():
+def get_ads(): #Linec hange in the middle of columns because of the number of columns
     sql = """SELECT A.id, A.title, A.description, A.phone, A.email, A.location, A.price, A.expires, A.sent_at, 
     U.username, C.cat_name, T.type_name FROM ads A, categories C, users U, ad_types T WHERE C.id=A.cat_id AND U.id=A.user_id
     AND T.id=A.type_id AND A.sent_at > current_date - A.expires GROUP BY A.id, C.id, U.id, T.id 
@@ -59,8 +59,9 @@ def search(username, title, description, price_low, price_high, cat_id, type_id)
     sql = """SELECT A.id, A.title, A.description, A.phone, A.email, A.location, A.price, A.expires, A.sent_at, 
     U.username, C.cat_name, T.type_name FROM ads A, categories C, users U, ad_types T WHERE C.id=A.cat_id AND U.id=A.user_id 
     AND T.id=A.type_id AND LOWER(U.username) LIKE :username AND LOWER(A.title) LIKE :title AND LOWER(A.description) 
-    LIKE :description AND A.price >= :price_low AND A.price <= :price_high AND CAST(A.cat_id AS text) LIKE :cat_id AND CAST(A.type_id AS text) LIKE :type_id 
-    AND A.sent_at > current_date - A.expires GROUP BY A.id, C.id, U.id, T.id ORDER BY A.sent_at DESC"""
+    LIKE :description AND A.price >= :price_low AND A.price <= :price_high AND CAST(A.cat_id AS text) LIKE :cat_id 
+    AND CAST(A.type_id AS text) LIKE :type_id AND A.sent_at > current_date - A.expires GROUP BY A.id, C.id, U.id, T.id 
+    ORDER BY A.sent_at DESC"""
     result = db.session.execute(sql, {"username":"%"+username+"%","title":"%"+title+"%", "description":"%"+description+"%",
     "price_low":price_low, "price_high":price_high, "cat_id":"%"+cat_id+"%", "type_id":"%"+type_id+"%"})    
     return result.fetchall()

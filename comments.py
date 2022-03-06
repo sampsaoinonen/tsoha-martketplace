@@ -40,7 +40,8 @@ def delete_user_comment(user_id, user_comment_id):
         result = db.session.execute("DELETE FROM user_comments WHERE id=:user_comment_id", {"user_comment_id":user_comment_id})
         db.session.commit()
     else:
-        result = db.session.execute("DELETE FROM user_comments WHERE id=:user_comment_id AND commentator_id=:user_id",{"user_id":user_id, "user_comment_id":user_comment_id})
+        result = db.session.execute("DELETE FROM user_comments WHERE id=:user_comment_id AND commentator_id=:user_id",
+        {"user_id":user_id, "user_comment_id":user_comment_id})
         db.session.commit()    
 
 def check_user_comment(user_comment_id):

@@ -36,6 +36,6 @@ def seen(message_id):
     db.session.commit()
 
 def check_unread(user_to):
-    sql = "SELECT COUNT(*) FROM messages WHERE user_to=:user_to AND seen=FALSE"
+    sql = "SELECT COUNT(id) FROM messages WHERE user_to=:user_to AND seen=FALSE"
     result = db.session.execute(sql, {"user_to":user_to})
     return result.fetchone()

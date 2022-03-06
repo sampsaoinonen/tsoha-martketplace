@@ -130,7 +130,7 @@ def edit_ad(ad_id):
                 return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)                                                
             images.delete_ad_image(ad_id)
             images.add_ad_image(image_name, ad_id, data)
-        return redirect("/ad/" + str(ad_id))
+        return redirect("/ad/<int:ad_id>")
 
 @app.route("/ad/<int:ad_id>/delete")
 def delete_ad(ad_id):
@@ -140,7 +140,7 @@ def delete_ad(ad_id):
         flash("Ad deleted succesfully!", "success")
         return redirect("/browse")
     flash("You don't have the rights to delete this ad!", "error")
-    return redirect("/ad/" + str(ad_id))
+    return redirect("/ad/<int:ad_id>")
 
 @app.route("/add_ad_comment", methods=["POST"])
 def add_ad_comment():
@@ -251,7 +251,6 @@ def sent_one(msg_id):
     msg = messages.get_one_sent(user_id, msg_id)
     messages.seen(msg_id)
     return render_template("message.html", msg=msg, unread=unread)
-
 
 @app.route("/search")
 def search():

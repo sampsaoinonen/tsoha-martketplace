@@ -49,10 +49,7 @@ def search(username):
 def get_profile(id):
     sql = "SELECT U.id, U.username, U.description, A.id, A.title, U.admin FROM users U LEFT JOIN ads A ON U.id=A.user_id WHERE U.id=:id"
     result = db.session.execute(sql, {"id":id})
-    user_info = result.fetchall()
-    if not user_info:
-        return False
-    return user_info
+    return result.fetchall()    
 
 def search_profile(username, admin):
     sql = """SELECT id, username, description, admin FROM users WHERE LOWER(username) LIKE :username AND CAST(admin AS TEXT) LIKE :admin ORDER BY ID"""    
