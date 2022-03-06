@@ -100,6 +100,14 @@
                             {% for user_comment in user_comments %}
                             {{user_comment[0]}}: {{user_comment[1]}}<br>
                             {{user_comment[2].strftime("%Y-%m-%d %H:%M:%S")}}
+                            
+                            {% if session.user_id == user_comment[4] or session.admin %}
+                            <form action="/user_comment/delete" method="POST">
+                                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                                <input type="hidden" name="profile_id" value="{{profile[0][0]}}">
+                                <button name="user_comment_id" value="{{user_comment[3]}}" class="btn btn-outline-danger px-2 ms-2">Delete comment</button>
+                            </form>
+                            {% endif %}
                             <br>                            
                             {% endfor %}
                         </div>

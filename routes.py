@@ -164,9 +164,9 @@ def delete_ad_comment():
         ad_id = request.form["ad_id"]        
         comments.delete_ad_comment(user_id, ad_comment_id)    
         if not comments.check_ad_comment(ad_comment_id):                   
-            flash("Profile deleted succesfully!", "success")                
+            flash("Comment deleted succesfully!", "success")                
         else:
-            flash("You have no permission to delete this profile!", "error")
+            flash("You have no permission to delete this comment!", "error")
     return redirect("/ad/" + ad_id) 
 
 
@@ -319,6 +319,21 @@ def add_user_comment():
         comments.add_user_comment(content, user_id, profile_id)
         flash("Your comment has been added!", "success")
     return redirect("/profile/" + profile_id)
+
+@app.route("/user_comment/delete", methods=["POST"])
+def delete_user_comment():
+    user_id = users.user_id()
+    if request.method == 'POST':
+        users.check_csrf(request.form["csrf_token"])
+        user_comment_id = request.form["user_comment_id"]
+        profile_id = request.form["profile_id"]        
+        comments.delete_user_comment(user_id, user_comment_id)    
+        if not comments.check_ad_comment(user_comment_id):                   
+            flash("Comment deleted succesfully!", "success")                
+        else:
+            flash("You have no permission to delete this comment!", "error")
+    return redirect("/profile/" + profile_id) 
+
 
 @app.route("/profile/<int:profile_id>/edit_profile", methods=["GET", "POST"])
 def edit_profile(profile_id):
