@@ -1,9 +1,8 @@
 {% extends "layout.html" %}
 {% block title %} 2 Many Gittars {% endblock %}
 {% block content %}
-<div class="col justify-content-center">
-    
-    <a href="/search"><button type="button" class="btn btn-outline-primary">Seacrh ad</button></a>
+<div class="col justify-content-center">    
+    <a href="/search"><button type="button" class="btn btn-outline-primary">Search ad</button></a>
     <a href="/search_profile"><button type="button" class="btn btn-outline-primary">Search profile</button></a>                    
 </div>
 <br>
@@ -14,6 +13,15 @@
         <label>User: </label>        
         <input type="text" name="user" class="form-control form-control">                
     </div>
+
+    <label>Admin/User: </label>
+        <br>        
+        <select class="form-select form-select-font-size" id="admin" name="admin">        
+            <option label="Pick Admin/User"></option>                    
+            <option value=t>Admin</option>
+            <option value=f>User</option>            
+        </select>
+        <br>
     <div class="form-group mb-3">
     <button type="submit" class="btn btn-primary">Search</button>
     </div>

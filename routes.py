@@ -276,10 +276,11 @@ def search_profile_result():
     if user_id != 0:
         users.check_csrf(request.args["csrf_token"])
     unread = messages.check_unread(user_id)
-    username = request.args["user"].lower()
+    username = request.args["user"].lower()    
+    admin = request.args["admin"]
     if not validators.search_profile(username):
         return redirect("/search_profile")
-    results = users.search_profile(username)
+    results = users.search_profile(username, admin)
     return render_template("profiles.html", results=results, unread=unread)
 
 @app.route("/profile/<int:profile_id>")

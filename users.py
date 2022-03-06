@@ -1,4 +1,3 @@
-from os import truncate
 from db import db
 from flask import session, abort
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -55,9 +54,9 @@ def get_profile(id):
         return False
     return user_info
 
-def search_profile(username):
-    sql = "SELECT id, username, description, admin FROM users WHERE LOWER(username) LIKE :username ORDER BY ID"    
-    result = db.session.execute(sql, {"username":"%"+username+"%"})    
+def search_profile(username, admin):
+    sql = """SELECT id, username, description, admin FROM users WHERE LOWER(username) LIKE :username AND CAST(admin AS TEXT) LIKE :admin ORDER BY ID"""    
+    result = db.session.execute(sql, {"username":"%"+username+"%", "admin":"%"+admin+"%"})    
     return result.fetchall()
 
 def update_description(description, user_id, profile_id):

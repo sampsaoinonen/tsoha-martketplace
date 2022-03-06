@@ -22,12 +22,20 @@
   <table> 
     <th>Username</th>    
     <th>Description</th>
-    <th>Admin</th>     
+    <th>Admin/User</th>     
   {% for result in results %}         
   <tr>      
-    <th><a href="/profile/{{result[0]}}">{{result[1]}}</a></th>    
+    <th><a href="/profile/{{result[0]}}">{{result[1]}}</a></th>
+    {% if result[2] %}
     <td>{{result[2]}}</td>
-    <td>{{result[3]}}</td>        
+    {% else %}  
+    <td></td>
+    {% endif %}
+    {% if result[3] %}
+    <td>Admin</td>
+    {% else %}
+    <td>User</td>
+    {% endif %}
   </tr>
 {% endfor %}
 </table>
