@@ -17,7 +17,7 @@
             {% if form %}
             <option selected="selected">{{ form.cate }}</option>
             {% else %}
-            <option label="Pick category - REQUIRED">.bg-gradient-secondary</option>
+            <option selected>Pick category - REQUIRED</option>
             {% endif %}
             {% for cat in categories %}
             <option value={{ cat.id }}>{{ cat.cat_name }}</option>
@@ -74,7 +74,7 @@
             {% if form %}
             <option selected="selected">{{ form.type }}</option>
             {% else %}
-            <option label="Pick category - REQUIRED">.bg-gradient-secondary</option>
+            <option selected>Pick type - REQUIRED</option>
             {% endif %}                    
             {% for type in types %}
             <option value={{ type.id }}>{{ type.type_name }}</option>

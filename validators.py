@@ -12,7 +12,7 @@ def register(username, password1, password2):
         return False
     return True
 
-def new_ad(title, description, phone, email, location, price, expires):
+def new_ad(title, description, phone, email, location, price, expires, cat_id, type_id):
     if len(title) < 3 or len(title) > 30:
         flash("Title has to be between 3 and 30 characters!", "error")
         return False
@@ -34,6 +34,13 @@ def new_ad(title, description, phone, email, location, price, expires):
     if float(expires) < 1 or float(expires) > 365:
         flash("Number of days have to be between 1 and 365!", "error")
         return False
+    if  cat_id == "Pick category - REQUIRED":
+        flash("You have to select the category to continue!", "error")
+        return False
+    if  type_id == "Pick type - REQUIRED":
+        flash("You have to select the type to continue!", "error")
+        return False
+
     return True
 
 def new_message(subject, message):

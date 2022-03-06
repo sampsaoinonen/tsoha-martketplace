@@ -76,7 +76,7 @@ def new_ad():
         type_id = request.form["type"]
         price = request.form["price"]
         expires = request.form["expires"]
-        if not validators.new_ad(title, description, phone, email, location, price, expires):        
+        if not validators.new_ad(title, description, phone, email, location, price, expires, cat_id, type_id):        
             return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)
         ad_id = ads.add_ad(title, description, phone, email, location, price, expires, user_id, cat_id, type_id)
         file = request.files["file"]             
