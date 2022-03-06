@@ -153,7 +153,21 @@ def add_ad_comment():
     if validators.add_comment(content):
         comments.add_ad_comment(content, ad_id, user_id)
         flash("Your comment has been added!", "success")
-    return redirect("/ad/" + ad_id)  
+    return redirect("/ad/" + ad_id)
+
+@app.route("/ad_comment/delete", methods=["POST"])
+def delete_ad_comment():
+    user_id = users.user_id()
+    if request.method == 'POST':
+        users.check_csrf(request.form["csrf_token"])
+        ad_comment_id = request.form["comment_id"]
+        ad_id = request.form["ad_id"]        
+        comments.delete_ad_comment(user_id, ad_comment_id)    
+        if not comments.check_ad_comment(ad_comment_id):                   
+            flash("Profile deleted succesfully!", "success")                
+        else:
+            flash("You have no permission to delete this profile!", "error")
+    return redirect("/ad/" + ad_id) 
 
 
 @app.route("/new_message",methods=["GET", "POST"])

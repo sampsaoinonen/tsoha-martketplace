@@ -78,7 +78,14 @@
 {% for ad_comment in ad_comments %}
     {{ad_comment[0]}}: {{ad_comment[1]}}<br>
     {{ad_comment[2].strftime("%Y-%m-%d %H:%M:%S")}}
-<br>
+    {% if session.user_id == ad_comment[4] or session.admin %}
+    <form action="/ad_comment/delete" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <input type="hidden" name="ad_id" value="{{ ad[0] }}">
+        <button name="comment_id" value="{{ad_comment[3]}}" class="btn btn-outline-danger px-3 ms-2">Delete comment</button>
+    </form>
+    {% endif %}
+    <br>
 <br>
 {% endfor %}
 {% if session.user_id %}
