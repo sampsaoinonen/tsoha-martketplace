@@ -8,4 +8,4 @@ MarkupSafe==2.0.1
 psycopg2-binary==2.9.3
 python-dotenv==0.19.2
 SQLAlchemy==2.0.38
-Werkzeug==2.0.2
+Werkzeug>=2.2.2
