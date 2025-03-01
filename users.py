@@ -2,10 +2,11 @@ from db import db
 from flask import session, abort
 from werkzeug.security import check_password_hash, generate_password_hash
 from secrets import token_hex
+from sqlalchemy.sql import text
 
 def login(username, password):
-    sql = "SELECT id, password, admin FROM users WHERE username=:username"
-    result = db.session.execute(sql, {"username":username})
+    sql = text("SELECT id, password, admin FROM users WHERE username=:username")
+    result = db.session.execute(sql, {"username": username})
     user = result.fetchone()
     if not user:
         return False    
@@ -17,51 +18,54 @@ def login(username, password):
     return False
 
 def logout():
-    del session["user_id"]
-    del session["admin"]
-    del session["csrf_token"]
+    session.pop("user_id", None)
+    session.pop("admin", None)
+    session.pop("csrf_token", None)
 
 def register(username, password):
     hash_value = generate_password_hash(password)
     try:
-        sql = "INSERT INTO users (username,password) VALUES (:username,:password)"
-        db.session.execute(sql, {"username":username, "password":hash_value})
+        sql = text("INSERT INTO users (username,password) VALUES (:username,:password)")
+        db.session.execute(sql, {"username": username, "password": hash_value})
         db.session.commit()
     except:
         return False
     return login(username, password)
 
 def user_id():
-    return session.get("user_id",0)
+    return session.get("user_id", 0)
 
 def check_csrf(form_token):
-    if session["csrf_token"] != form_token:
+    if session.get("csrf_token") != form_token:
         abort(403)
 
 def search(username):    
-    sql = "SELECT id FROM users WHERE username=:username"
-    result = db.session.execute(sql, {"username":username})
-    message_id = result.fetchone()
-    if not message_id:
-        return False
-    return message_id[0]
+    sql = text("SELECT id FROM users WHERE username=:username")
+    result = db.session.execute(sql, {"username": username})
+    user_id = result.fetchone()
+    return user_id[0] if user_id else False
 
 def get_profile(id):
-    sql = "SELECT U.id, U.username, U.description, A.id, A.title, U.admin FROM users U LEFT JOIN ads A ON U.id=A.user_id WHERE U.id=:id"
-    result = db.session.execute(sql, {"id":id})
+    sql = text("SELECT U.id, U.username, U.description, A.id, A.title, U.admin FROM users U LEFT JOIN ads A ON U.id=A.user_id WHERE U.id=:id")
+    result = db.session.execute(sql, {"id": id})
     return result.fetchall()    
 
 def search_profile(username, admin):
-    sql = """SELECT id, username, description, admin FROM users WHERE LOWER(username) LIKE :username AND CAST(admin AS TEXT) LIKE :admin ORDER BY ID"""    
-    result = db.session.execute(sql, {"username":"%"+username+"%", "admin":"%"+admin+"%"})    
+    sql = text("""SELECT id, username, description, admin FROM users 
+                  WHERE LOWER(username) LIKE :username 
+                  AND CAST(admin AS TEXT) LIKE :admin 
+                  ORDER BY id""")    
+    result = db.session.execute(sql, {"username": f"%{username}%", "admin": f"%{admin}%"})    
     return result.fetchall()
 
 def update_description(description, user_id, profile_id):
-    if user_id == profile_id or session["admin"]:    
-        db.session.execute("UPDATE users SET description=:description WHERE id=:profile_id",{"description":description, "profile_id":profile_id})
+    if user_id == profile_id or session.get("admin"):    
+        sql = text("UPDATE users SET description=:description WHERE id=:profile_id")
+        db.session.execute(sql, {"description": description, "profile_id": profile_id})
         db.session.commit()
 
 def delete_user(user_id, profile_id):
-    if user_id == profile_id or session["admin"]:
-        db.session.execute("DELETE FROM users WHERE id=:profile_id",{"profile_id":profile_id})
+    if user_id == profile_id or session.get("admin"):
+        sql = text("DELETE FROM users WHERE id=:profile_id")
+        db.session.execute(sql, {"profile_id": profile_id})
         db.session.commit()
