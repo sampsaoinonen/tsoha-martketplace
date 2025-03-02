@@ -1,67 +1,173 @@
-# 2 Many Gittars
+## 🛒 2 Many Gittars - Marketplace
 
-2 Many Gittars is a marketplace for guitars, amps and other items related to guitars. This web application is created using Flask and PostgreSQL-database. It is possible to test on [Heroku](https://tsoha-2manygittars.herokuapp.com). SQL-tables can be found [here](https://github.com/sampsaoinonen/tsoha-martketplace/blob/main/SQL/schema.sql)
-
-ADMIN - account info is in LABTOOL (3rd review reply)
+![Animated gif](./screenshots/animated.gif) 
 
 
-## Plans at the Beginning
+A  **web-based marketplace application**  where users can create, browse, and manage advertisements. Users can post ads, upload images, send messages, and interact with others.
 
-### Features
-- a user can create an account as either ”user” or ”admin”
-- a user can log in and log out
-- a user can search and view ads (with or without logging in)
-- a logged user has a profile where user can write description of himself/herself
-- a logged user can comment a profile and the owner can delete comments
-- a logged user can rate a profile based on how trade went
-- a logged user can create an ad with a picture(optional)
-- a logged user can comment an ad
-- a logged user can send a message to another registered user
-- a logged user can view and delete messages
-- a logged user can remove user's own ad
-- a logged user can view list of user's own ad history
-- an admin can remove any comment
-- an admin can remove any ad
-- an admin can remove any user profile
+  
 
-## Current state 20.2
+This project is deployed on  **Heroku**, check it out here:
 
-Basic functionalities are working pretty good and layout is almost there. User profile pages, commenting and deleting ads/messages are still in progress. The project has took so much more work than I thought but I hope the biggest challenges are behind(Like search function and uploading images).
+🔗  [**Live Demo**](https://tsoha-2manygittars-332c1b1f9ef8.herokuapp.com/)
 
-- :ballot_box_with_check: a user can create an account as either ”user” or ”admin”. Admin not possible yet.
-- :ballot_box_with_check: a user can log in and log out
-- :ballot_box_with_check: a user can search and view ads (with or without logging in)
-- :black_square_button: a logged user has a profile where user can write description of himself/herself
-- :black_square_button: a logged user can comment a profile and the owner can delete comments
-- :black_square_button: a logged user can rate a profile based on how trade went
-- :ballot_box_with_check: a logged user can create an ad with a picture(optional)
-- :black_square_button: a logged user can comment an ad
-- :ballot_box_with_check: a logged user can send a message to another registered user
-- :ballot_box_with_check: a logged user can view and delete messages. Delete not possible yet.
-- :black_square_button: a logged user can remove user's own ad
-- :black_square_button: a logged user can view list of user's own ad history
-- :black_square_button: an admin can remove any comment
-- :black_square_button: an admin can remove any ad
-- :black_square_button: an admin can remove any user profile
+  
 
-## Final version
+Built as part of a Helsinki university web development course, this project showcases  **full-stack development**  skills with a  **Python, Flask, PostgreSQL, and JavaScript**  stack.
 
-- :white_check_mark: a user can have an account as either ”user” or ”admin”
-- :white_check_mark: a user can log in and log out
-- :white_check_mark: a user can search and view ads (with or without logging in)
-- :white_check_mark: a logged user has a profile where user can write description of himself/herself
-- :white_check_mark: a logged user can comment a profile and the owner can delete comments
-- :white_check_mark: a logged user can rate a profile based on how trade went  :guitar::guitar::guitar: User can comment about the trade in sellers profile
-- :white_check_mark: a logged user can create an ad with a picture(optional)
-- :white_check_mark: a logged user can comment an ad
-- :white_check_mark: a logged user can send a message to another registered user
-- :white_check_mark: a logged user can view and send messages.
-- :white_check_mark: a logged user can remove user's own ad
-- :black_square_button: a logged user can view list of user's own ad history   :guitar::guitar::guitar: This never happened 
-- :white_check_mark: an admin can remove any comment
-- :white_check_mark: an admin can remove any ad
-- :white_check_mark: an admin can remove any user profile
+### 🚀 Features
 
-## Final Conlusions
+  
 
-The app is pretty close what was planned at first. "Ad history" was forgotten but everything else is included there. Thinking the workload now this project has way too much different functions and it took me a lot of time to accomplish. Still the app could consider missing features like the app never deletes old ads, deleting messages not possible etc. - Maybe I continue finishing those later.
+**✅ User Management**
+
+•  **Register & Login:**  Secure authentication using hashed passwords and CSRF protection.
+
+•  **Profiles:**  Users have personal pages where they can add descriptions and upload profile images.
+
+•  **Admin Role:**  Admin users have additional rights, such as deleting other users’ content.
+
+  
+
+**📢 Ads**
+
+•  **Post New Ads:**  Users can create ads with descriptions, categories, pricing, and expiration dates.
+
+•  **Edit & Delete Ads:**  Users can update or remove their own ads.
+
+•  **Image Upload:**  Ads can include images, which are stored in a PostgreSQL database.
+
+•  **Search & Filter:**  Advanced search allows filtering by title, price range, categories, and keywords.
+
+  
+
+**✉️ Messaging System**
+
+•  **Direct Messages:**  Users can send and receive private messages.
+
+•  **Unread Notifications:**  The app tracks unread messages.
+
+•  **Message History:**  Users can view their inbox and sent messages.
+
+  
+
+**💬 Comments & Reviews**
+
+•  **Ad Comments:**  Users can leave comments on advertisements.
+
+•  **Profile Reviews:**  Users can leave feedback on other users’ profiles.
+
+•  **Admin Moderation:**  Admins can remove inappropriate comments.
+
+
+
+### 🛠️ Technologies Used
+
+| **Technology**       | **Purpose**                                         |
+|----------------------|-----------------------------------------------------|
+| 🐍 **Python**        | Backend logic and data handling                    |
+| 🌎 **Flask**         | Web framework for routing and session management   |
+| 🛢️ **PostgreSQL**    | Database for users, ads, messages, and images      |
+| 🔗 **SQLAlchemy**    | ORM for database interactions                      |
+| 🎨 **HTML, CSS, JS** | Frontend structure and styling                     |
+| 🖋️ **Jinja2**        | Templating engine for rendering dynamic content    |
+| 🔐 **Werkzeug Security** | Password hashing for authentication          |
+| ☁️ **Heroku**        | Cloud hosting for deployment                       |
+
+---
+
+### 📸 Screenshots
+
+<a href="./screenshots/1.jpg">
+    <img src="./screenshots/1.jpg" width="180" height="98">
+</a>
+<a href="./screenshots/2.jpg">
+    <img src="./screenshots/2.jpg" width="180" height="98">
+</a>
+<a href="./screenshots/3.jpg">
+    <img src="./screenshots/3.jpg" width="180" height="98">
+</a>
+<a href="./screenshots/4.jpg">
+    <img src="./screenshots/4.jpg" width="180" height="98">
+</a>
+<a href="./screenshots/5.jpg">
+    <img src="./screenshots/5.jpg" width="180" height="98">
+</a>
+<a href="./screenshots/6.jpg">
+    <img src="./screenshots/6.jpg" width="180" height="98">
+</a>
+<a href="./screenshots/7.jpg">
+    <img src="./screenshots/7.jpg" width="180" height="98">
+</a>
+<a href="./screenshots/8.jpg">
+    <img src="./screenshots/8.jpg" width="180" height="98">
+</a>
+
+---
+
+  
+
+### 🔧 Installation & Running Locally
+
+  
+
+**1️⃣ Clone the repository**
+
+```
+git clone https://github.com/sampsaoinonen/tsoha-martketplace.git
+cd tsoha-martketplace
+```
+
+**2️⃣ Set up the virtual environment & install dependencies**
+
+```
+python -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+**3️⃣ Set up environment variables**
+
+  
+
+Create a  .env  file and define the following:
+
+```
+DATABASE_URL=your_postgres_database_url
+SECRET_KEY=your_secret_key
+```
+
+**4️⃣ Initialize the database**
+
+```
+psql < schema.sql
+```
+
+**5️⃣ Run the application**
+
+```
+flask run
+```
+
+The app will be available at:  **http://127.0.0.1:5000/**
+
+----
+
+
+### 🎯 What did I learn from This Project?
+
+  
+
+This project demonstrates my ability to build a  **full-stack web application from scratch**, including:
+
+•  Secure authentication & user management
+
+•  Database design & SQL optimization
+
+•  Backend development with Flask & PostgreSQL
+
+•  Frontend templating with Jinja2
+
+•  Deployment & hosting on Heroku
+
+•  Applying best practices like **CSRF protection, password hashing, and form validation**
