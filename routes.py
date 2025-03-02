@@ -57,7 +57,7 @@ def browse():
 def new_ad():
     user_id = users.user_id()
     if user_id == 0:
-        flash("Log in to create a new ad!")
+        flash("Log in to create a new ad!", "error")
         return redirect("/login")
     unread = messages.check_unread(user_id)
     form = request.form
@@ -78,14 +78,17 @@ def new_ad():
         expires = request.form["expires"]
         if not validators.new_ad(title, description, phone, email, location, price, expires, cat_id, type_id):        
             return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)
+        
         ad_id = ads.add_ad(title, description, phone, email, location, price, expires, user_id, cat_id, type_id)
         file = request.files["file"]             
         if file:
             data = file.read()
             image_name = file.filename         
             if not validators.image(image_name, len(data)):
-                return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)                                                
+                flash("Invalid image. Please upload a valid file.", "error")
+                return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)  
             images.add_ad_image(image_name, ad_id, data)
+
         return redirect("/browse")
     
 @app.route("/ad/<int:ad_id>")
