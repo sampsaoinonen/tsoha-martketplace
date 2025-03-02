@@ -63,8 +63,10 @@ def new_ad():
     form = request.form
     categories = ads.get_cats()
     types = ads.get_types()
+    
     if request.method == "GET":        
         return render_template("new_ad.html", categories=categories, types=types, unread=unread)
+    
     if request.method == "POST":
         users.check_csrf(request.form["csrf_token"])     
         cat_id = request.form["cate"]        
@@ -76,20 +78,25 @@ def new_ad():
         type_id = request.form["type"]
         price = request.form["price"]
         expires = request.form["expires"]
-        if not validators.new_ad(title, description, phone, email, location, price, expires, cat_id, type_id):        
-            return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)
         
-        ad_id = ads.add_ad(title, description, phone, email, location, price, expires, user_id, cat_id, type_id)
         file = request.files["file"]             
         if file:
             data = file.read()
             image_name = file.filename         
             if not validators.image(image_name, len(data)):
                 flash("Invalid image. Please upload a valid file.", "error")
-                return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)  
+                return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)
+
+        if not validators.new_ad(title, description, phone, email, location, price, expires, cat_id, type_id):        
+            return render_template("new_ad.html", form=form, categories=categories, types=types, unread=unread)
+
+        ad_id = ads.add_ad(title, description, phone, email, location, price, expires, user_id, cat_id, type_id)
+        
+        if file:
             images.add_ad_image(image_name, ad_id, data)
 
         return redirect("/browse")
+
     
 @app.route("/ad/<int:ad_id>")
 def ad(ad_id):
