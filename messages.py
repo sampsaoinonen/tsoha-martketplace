@@ -40,4 +40,4 @@ def seen(message_id):
 def check_unread(user_to):
     sql = text("SELECT COUNT(id) FROM messages WHERE user_to=:user_to AND seen=FALSE")
     result = db.session.execute(sql, {"user_to": user_to})
-    return result.fetchone()[0] if result else 0
+    return result.fetchone()
